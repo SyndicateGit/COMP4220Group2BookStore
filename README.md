@@ -13,3 +13,12 @@ git clone https://github.com/SyndicateGit/COMP4220Group2BookStore.git
     - Change the location to the xyBookstoreDB.mdf file in your project folder
     - Test Connection (should work) and click OK.
 5.  Click green right arrow start button at the top to launch program.
+
+Follow announcement for tfs.Agile2DB24 database setup.
+Add to BookStoreLib > Properties > Settings.setting a new connection string to tfs.cs.uwindsor.ca under MSSQLConnection.
+![image](https://github.com/user-attachments/assets/87627bab-8fe5-4c4c-9f2f-4f0be202352b)
+![image](https://github.com/user-attachments/assets/f7d76dc0-2c9a-46b2-a3f4-1c3117aa5873)
+
+
+
+
