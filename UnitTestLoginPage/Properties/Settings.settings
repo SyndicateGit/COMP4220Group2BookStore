@@ -5,10 +5,10 @@
     <Setting Name="RZConnection" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
-  &lt;ConnectionString&gt;Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Lenovo\Desktop\Classes\COMP4220\Assignment\RZCOMP4200A3\xyBookstoreDB.mdf;Integrated Security=True;Connect Timeout=30&lt;/ConnectionString&gt;
+  &lt;ConnectionString&gt;Data Source=tfs.cs.uwindsor.ca;Initial Catalog=Agile2DB24;Persist Security Info=True;User ID=Agile2DB24;Password=Agile2DB24#;TrustServerCertificate=True&lt;/ConnectionString&gt;
   &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Lenovo\Desktop\Classes\COMP4220\Assignment\RZCOMP4200A3\xyBookstoreDB.mdf;Integrated Security=True;Connect Timeout=30</Value>
+      <Value Profile="(Default)">Data Source=tfs.cs.uwindsor.ca;Initial Catalog=Agile2DB24;Persist Security Info=True;User ID=Agile2DB24;Password=Agile2DB24#;TrustServerCertificate=True</Value>
     </Setting>
     <Setting Name="MSSQLConnection" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
