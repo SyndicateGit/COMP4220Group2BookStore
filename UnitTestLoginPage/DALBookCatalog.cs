@@ -18,7 +18,7 @@ namespace BookStoreLIB
         DataSet dsBooks;
         public DALBookCatalog()
         {
-            conn = new SqlConnection(Properties.Settings.Default.RZConnection);
+            conn = new SqlConnection(Properties.Settings.Default.MSSQLConnection);
         }
         public DataSet GetBookInfo()
         {
