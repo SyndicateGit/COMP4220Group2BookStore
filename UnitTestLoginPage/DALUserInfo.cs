@@ -33,6 +33,11 @@ namespace BookStoreLIB
                     conn.Close();
             }
         }
+
+        public int Signup(string userName, string password, string fullName)
+        {
+            return -1;
+        }
         public DALUserInfo()
         {
 

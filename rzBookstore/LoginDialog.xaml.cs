@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 namespace BookStoreGUI
 {
     public partial class LoginDialog : Window
@@ -21,8 +22,12 @@ namespace BookStoreGUI
         private void signupButton_Click(object sender, RoutedEventArgs e)
         {
             SignupDialog signupDialog = new SignupDialog();
-            this.Close(); 
-            signupDialog.ShowDialog(); 
+            bool? result = signupDialog.ShowDialog();
+            if (result == true && signupDialog != null)
+            {
+                // Autofill signup username
+                nameTextBox.Text = signupDialog.usernameTextBox.Text;
+            }
         }
     }
 }
