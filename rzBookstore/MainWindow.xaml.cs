@@ -42,6 +42,7 @@ namespace BookStoreGUI
                     this.statusTextBlock.Text = "Your login failed. Please try again.";
             }
         }
+
         private void exitButton_Click(object sender, RoutedEventArgs e) { this.Close(); }
         public MainWindow() { InitializeComponent(); }
         private void Window_Loaded(object sender, RoutedEventArgs e)
