@@ -1,0 +1,29 @@
+﻿<Window x:Class="BookStoreGUI.PHDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Purchase History" Height="450" Width="800">
+    <Grid>
+        <!-- DataGrid for Purchase History -->
+        <DataGrid x:Name="purchaseHistoryDataGrid" 
+                  AutoGenerateColumns="False" 
+                  HorizontalAlignment="Stretch" 
+                  VerticalAlignment="Stretch"
+                  Margin="10,10,10,50">
+            <!-- Adjust margin for button placement -->
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Order ID" Binding="{Binding OrderID}" Width="100"/>
+                <DataGridTextColumn Header="Author" Binding="{Binding Author}" Width="150"/>
+                <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="200"/>
+                <DataGridTextColumn Header="Order Date" Binding="{Binding OrderDate}" Width="120"/>
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="80"/>
+                <DataGridTextColumn Header="Total Price" Binding="{Binding TotalPrice}" Width="100"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Exit Button in the Bottom-Right Corner -->
+        <Button x:Name="exitButton" Click="exitButton_Click" IsCancel="True"
+                Content="Exit" MinWidth="80" Margin="10"
+                HorizontalAlignment="Right" VerticalAlignment="Bottom" />
+    </Grid>
+</Window>
+
