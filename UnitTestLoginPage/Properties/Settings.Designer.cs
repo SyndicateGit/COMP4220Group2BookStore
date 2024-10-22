@@ -26,9 +26,8 @@ namespace BookStoreLIB.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Lenovo\\Desktop\\Class" +
-            "es\\COMP4220\\Assignment\\RZCOMP4200A3\\xyBookstoreDB.mdf;Integrated Security=True;C" +
-            "onnect Timeout=30")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=tfs.cs.uwindsor.ca;Initial Catalog=Agile2DB24;Persist Security Info=T" +
+            "rue;User ID=Agile2DB24;Password=Agile2DB24#;TrustServerCertificate=True")]
         public string RZConnection {
             get {
                 return ((string)(this["RZConnection"]));
