@@ -9,6 +9,7 @@
   &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Data Source=tfs.cs.uwindsor.ca;Initial Catalog=Agile2DB24;Persist Security Info=True;User ID=Agile2DB24;Password=Agile2DB24#;TrustServerCertificate=True</Value>
+<<<<<<< HEAD
     </Setting>
     <Setting Name="MSSQLConnection" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
@@ -17,6 +18,8 @@
   &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Data Source=tfs.cs.uwindsor.ca;Initial Catalog=Agile2DB24;Persist Security Info=True;User ID=Agile2DB24;Password=Agile2DB24#;TrustServerCertificate=True</Value>
+=======
+>>>>>>> 457cfeb (sold out books code)
     </Setting>
   </Settings>
 </SettingsFile>
