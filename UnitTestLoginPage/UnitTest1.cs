@@ -6,14 +6,14 @@ namespace BookStoreLIB
     [TestClass]
     public class UnitTest1
     {
-        
+
         UserData userData = new UserData();
-        string inputName, inputPassword;
+        string inputName, inputPassword, fullName;
         int actualUserId;
         [TestMethod]
         public void TestCorrectLogin()
         {
-            inputName = "dclark";
+            inputName = "dclair";
             inputPassword = "dc1234";
             Boolean expectedReturn = true;
             int expectedUserId = 1;
@@ -28,7 +28,7 @@ namespace BookStoreLIB
         }
 
         [TestMethod]
-        public void TestWrongUserNameOrPassword()
+        public void TestLoginWrongUserNameOrPassword()
         {
             // Wrong Username
             inputName = "1rzeng";
@@ -51,7 +51,7 @@ namespace BookStoreLIB
         }
 
         [TestMethod]
-        public void TestEmptyFieldsMessage()
+        public void TestLoginEmptyFieldsMessage()
         {
             inputName = "";
             inputPassword = "";
@@ -65,19 +65,69 @@ namespace BookStoreLIB
             Assert.AreEqual(expectedReturm, actualReturn);
         }
         [TestMethod]
-        public void TestInvalidPassword()
+        public void TestLoginInvalidPassword()
         {
             inputName = "rzeng";
             inputPassword = "0rz1234"; // First character non letter
             String expectedReturm = "A valid password needs to have at least six characters with both letters and numbers.";
             String actualReturn = userData.authenticate(inputName, inputPassword);
-            
+
             Assert.AreEqual(expectedReturm, actualReturn);
             inputPassword = "rz123"; // Less than 6 characters
+            actualReturn = userData.authenticate(inputName, inputPassword);
             Assert.AreEqual(expectedReturm, actualReturn);
+
             inputPassword = "rz12345"; // More than 6 characters
+            actualReturn = userData.authenticate(inputName, inputPassword);
             Assert.AreEqual(expectedReturm, actualReturn);
+
             inputPassword = "rz123%"; // None alphanum character
+            actualReturn = userData.authenticate(inputName, inputPassword);
+            Assert.AreEqual(expectedReturm, actualReturn);
+        }
+
+        [TestMethod]
+        public void TestSignupUniqueUser()
+        {
+            inputName = "test1"; // Increment by 1 every test to ensure unique username
+            inputPassword = "te1234";
+            fullName = "test";
+
+            string expectedReturn = "Success";
+            string actualReturn = userData.SignUp(inputName, inputPassword, fullName);
+            Assert.AreEqual(expectedReturn, actualReturn);
+        }
+
+        [TestMethod]
+        public void TestSignupUsernameAlreadyExist()
+        {
+            inputName = "rzeng"; // Username already exist
+            inputPassword = "rz1234";
+            fullName = "Raymond Z";
+            
+            String expectedReturm = "Username already exists. Please choose a different username.";
+            String actualReturn = userData.SignUp(inputName, inputPassword, fullName);
+
+            Assert.AreEqual(expectedReturm, actualReturn);
+        }
+
+        [TestMethod]
+        public void TestSignupInvalidPassword()
+        {
+            inputName = "rzeng"; // Username already exist
+            inputPassword = "rz123"; // Less than 6 characters
+            fullName = "Raymond Z";
+
+            String expectedReturm = "A valid password needs to have exactly six characters with both letters and numbers, starting with a letter.";
+            String actualReturn = userData.SignUp(inputName, inputPassword, fullName);
+            Assert.AreEqual(expectedReturm, actualReturn);
+
+            inputPassword = "rz12345"; // More than 6 characters
+            actualReturn = userData.SignUp(inputName, inputPassword, fullName);
+            Assert.AreEqual(expectedReturm, actualReturn);
+
+            inputPassword = "rz123%"; // None alphanum character
+            actualReturn = userData.SignUp(inputName, inputPassword, fullName);
             Assert.AreEqual(expectedReturm, actualReturn);
         }
     }
