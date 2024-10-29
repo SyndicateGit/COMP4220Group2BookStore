@@ -32,14 +32,18 @@
                       Width="490" HorizontalAlignment="Left" Margin="20,0,20,10"
                       SelectionMode="Single">
                 <DataGrid.Columns>
-                    <DataGridTextColumn x:Name="titleColumn" Binding="{Binding Title}"
-                                        Header="Title" Width="50*" />
-                    <DataGridTextColumn x:Name="authorColumn" Binding="{Binding Author}"
-                                        Header="Author" Width="18*" />
-                    <DataGridTextColumn x:Name="priceColumn" Binding="{Binding Price}"
-                                        Header="Price" Width="12*" CanUserSort="False" />
-                    <DataGridTextColumn x:Name="yearColumn" Binding="{Binding Year}"
-                                        Header="Year" Width="8*" />
+                    <DataGridTextColumn
+			x:Name="titleColumn" Binding="{Binding Title}"
+			Header="Title" Width="50*" />
+                    <DataGridTextColumn
+			x:Name="authorColumn" Binding="{Binding Author}"
+			Header="Author" Width="18*" />
+                    <DataGridTextColumn
+			x:Name="priceColumn" Binding="{Binding Price}"
+			Header="Price" Width="12*" />
+                    <DataGridTextColumn
+			x:Name="yearColumn" Binding="{Binding Year}"
+			Header="Year" Width="8*" />
                 </DataGrid.Columns>
             </DataGrid>
 
