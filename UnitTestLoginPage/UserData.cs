@@ -35,6 +35,12 @@ namespace BookStoreLIB
 
         }
 
+        public void LogOut()
+        {
+            UserID = 0;
+            LoggedIn = false;
+        }
+
         public String SignUp(string signupName, string password, string fullName)
         {
             if (signupName.Length == 0 || password.Length == 0 || fullName.Length == 0)

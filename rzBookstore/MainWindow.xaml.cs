@@ -29,17 +29,32 @@ namespace BookStoreGUI
         BookOrder bookOrder;
         private void loginButton_Click(object sender, RoutedEventArgs e)
         {
-            LoginDialog dlg = new LoginDialog();
-            dlg.Owner = this;
-            dlg.ShowDialog();
-            // Process data entered by user if dialog box is accepted
-            if (dlg.DialogResult == true)
+            if (userData.LoggedIn)
             {
-                if (userData.LogIn(dlg.nameTextBox.Text, dlg.passwordTextBox.Password) == true)
-                    this.statusTextBlock.Text = "You are logged in as User #" +
-                    userData.UserID;
-                else
-                    this.statusTextBlock.Text = "Your login failed. Please try again.";
+                userData.LogOut();
+                this.statusTextBlock.Text = "You have logged out.";
+                this.loginButton.Content = "Login";
+                bookOrder.OrderItemList.Clear();
+                this.orderListView.ItemsSource = null;
+            }
+            else
+            {
+                LoginDialog dlg = new LoginDialog();
+                dlg.Owner = this;
+                dlg.ShowDialog();
+                // Process data entered by user if dialog box is accepted
+                if (dlg.DialogResult == true)
+                {
+                    if (userData.LogIn(dlg.nameTextBox.Text, dlg.passwordTextBox.Password) == true)
+                    {
+                        this.statusTextBlock.Text = "You are logged in as User #" +
+                        userData.UserID;
+                        this.loginButton.Content = "Logout";
+                        this.orderListView.ItemsSource = bookOrder.OrderItemList; // Needed refresh to not be stale between sessions.
+                    }
+                    else
+                        this.statusTextBlock.Text = "Your login failed. Please try again.";
+                }
             }
         }
 
