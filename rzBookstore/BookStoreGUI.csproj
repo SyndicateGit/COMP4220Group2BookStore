@@ -83,7 +83,6 @@
       <DependentUpon>SignupDialog.xaml</DependentUpon>
     </Compile>
 
-
     <Page Include="BookDetails.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
