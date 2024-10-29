@@ -17,7 +17,7 @@ namespace BookStoreLIB
 
         public DALPurchaseHistory()
         {
-            conn = new SqlConnection(Properties.Settings.Default.MSSQLConnectionString);
+            conn = new SqlConnection(Properties.Settings.Default.MSSQLConnection);
         }
 
         public DataSet GetPhInfo(int userID)
