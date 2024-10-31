@@ -1,44 +1,63 @@
-﻿/* **********************************************************************************
- * For use by students taking 60-422 (Fall, 2014) to work on assignments and project.
- * Permission required material. Contact: xyuan@uwindsor.ca 
- * **********************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace BookStoreLIB
 {
     public class OrderItem : INotifyPropertyChanged
     {
-        #region INotifyPropertyChanged Members
         public event PropertyChangedEventHandler PropertyChanged;
         protected void Notify(string propName)
         {
-            if (this.PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
-        #endregion
 
         public string BookID { get; set; }
         public string BookTitle { get; set; }
-        public int Quantity { get; set; }
-        public double UnitPrice { get; set; }
-        public double SubTotal { get; set; }
+
+        private int quantity;
+        public int Quantity
+        {
+            get => quantity;
+            set
+            {
+                quantity = value;
+                Notify(nameof(Quantity));
+                UpdateSubTotal();
+            }
+        }
+
+        private double unitPrice;
+        public double UnitPrice
+        {
+            get => unitPrice;
+            set
+            {
+                unitPrice = value;
+                Notify(nameof(UnitPrice));
+                UpdateSubTotal();
+            }
+        }
+
+        private double subTotal;
+        public double SubTotal
+        {
+            get => subTotal;
+            private set
+            {
+                subTotal = value;
+                Notify(nameof(SubTotal));
+            }
+        }
 
         private DiscountManager _discountManager;
 
-        public OrderItem(String isbn, String title,
-            double unitPrice, int quantity)
+        public OrderItem(string isbn, string title, double unitPrice, int quantity)
         {
             BookID = isbn;
             BookTitle = title;
             UnitPrice = unitPrice;
             Quantity = quantity;
-            SubTotal = UnitPrice * Quantity;
+            _discountManager = new DiscountManager((decimal)unitPrice);
+            UpdateSubTotal();
         }
 
         public void ApplyDiscount(decimal percentage)
@@ -58,11 +77,10 @@ namespace BookStoreLIB
             UnitPrice = (double)_discountManager.RemoveDiscount();
             UpdateSubTotal(); // Ensure subtotal is updated
         }
+
         public override string ToString()
         {
-            string xml = "<OrderItem ISBN='" + BookID + "'";
-            xml += " Quantity='" + Quantity + "' />";
-            return xml;
+            return $"<OrderItem ISBN='{BookID}' Quantity='{Quantity}' />";
         }
     }
 }
