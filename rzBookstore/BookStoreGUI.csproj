@@ -82,12 +82,10 @@
     <Compile Include="SignupDialog.xaml.cs">
       <DependentUpon>SignupDialog.xaml</DependentUpon>
     </Compile>
-
     <Page Include="BookDetails.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-
     <Page Include="LoginDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -169,15 +167,6 @@
       <Project>{a25aae64-9349-4a4d-8dd4-2945fd912608}</Project>
       <Name>BookStoreLIB</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="xyBookstoreDB.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xyBookstoreDB_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>xyBookstoreDB.mdf</DependentUpon>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
