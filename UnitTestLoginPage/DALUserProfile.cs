@@ -10,7 +10,7 @@ namespace BookStoreLIB
 
         public DALUserProfile()
         {
-            conn = new SqlConnection(Properties.Settings.Default.MSSQLConnectionString);
+            conn = new SqlConnection(Properties.Settings.Default.MSSQLConnection);
         }
 
         // Method to get user profile information based on user ID

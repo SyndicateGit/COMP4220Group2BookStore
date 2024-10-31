@@ -55,6 +55,7 @@
     <Compile Include="DALBookCatalog.cs" />
     <Compile Include="DALOrder.cs" />
     <Compile Include="DALUserInfo.cs" />
+    <Compile Include="DALUserProfile.cs" />
     <Compile Include="OrderItem.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -64,6 +65,7 @@
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserData.cs" />
+    <Compile Include="userProfile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
