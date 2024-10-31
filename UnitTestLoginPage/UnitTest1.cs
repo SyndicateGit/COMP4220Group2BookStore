@@ -181,6 +181,77 @@ namespace BookStoreLIB
             actualReturn = userData.SignUp(inputName, inputPassword, fullName);
             Assert.AreEqual(expectedReturm, actualReturn);
         }
+
+
+        [TestMethod]
+        public void TestBookAvailabilityByTitle()
+        {
+            string testTitle = "Microsoft Visual C# 2012: An Introduction to Object-Oriented Programming";
+            BookCatalog bookCatalog = new BookCatalog();
+
+           
+            DataSet dsBooks = bookCatalog.GetBookInfo();
+            if (dsBooks == null)
+            {
+                Assert.Fail("DataSet dsBooks is null. Ensure GetBookInfo returns a valid DataSet.");
+                return;
+            }
+
+          
+            if (!dsBooks.Tables.Contains("Books"))
+            {
+                Assert.Fail("Books table not found in the dataset.");
+                return;
+            }
+
+            
+            DataRow[] foundBooks = dsBooks.Tables["Books"].Select($"Title = '{testTitle}'");
+
+            int stockCount = 0;
+            DateTime? restockDate = null;
+
+            if (foundBooks.Length > 0)
+            {
+                DataRow bookRow = foundBooks[0];
+                stockCount = Convert.ToInt32(bookRow["InStock"]);
+
+                if (stockCount == 0 && bookRow["RestockDate"] != DBNull.Value)
+                {
+                    DateTime tempDate;
+                    if (DateTime.TryParse(bookRow["RestockDate"].ToString(), out tempDate))
+                    {
+                        restockDate = tempDate;
+                    }
+                }
+
+               
+                Console.WriteLine($"Stock Count: {stockCount}");
+                Console.WriteLine($"Restock Date: {(restockDate.HasValue ? restockDate.Value.ToString("yyyy-MM-dd") : "No Restock Date Available")}");
+            }
+            else
+            {
+                Assert.Fail("No books found with the provided title.");
+            }
+
+            if (stockCount > 0)
+            {
+                Assert.IsTrue(stockCount > 0, "The book should be in stock.");
+            }
+            else
+            {
+                Assert.IsNotNull(restockDate, "Restock date should be provided for out-of-stock items.");
+                Assert.IsTrue(restockDate.HasValue, $"New stock expected on {restockDate.Value:yyyy-MM-dd}");
+            }
+
+          
+            Console.WriteLine("TestBookAvailabilityByTitle completed successfully.");
+        }
+
+
+
+
+
+
     }
 
 }
