@@ -29,6 +29,8 @@ namespace BookStoreLIB
         public double UnitPrice { get; set; }
         public double SubTotal { get; set; }
 
+        private DiscountManager _discountManager;
+
         public OrderItem(String isbn, String title,
             double unitPrice, int quantity)
         {
@@ -37,6 +39,24 @@ namespace BookStoreLIB
             UnitPrice = unitPrice;
             Quantity = quantity;
             SubTotal = UnitPrice * Quantity;
+        }
+
+        public void ApplyDiscount(decimal percentage)
+        {
+            _discountManager.ApplyDiscount(percentage);
+            UnitPrice = (double)_discountManager.GetCurrentPrice();
+            UpdateSubTotal(); // Ensure subtotal is updated
+        }
+
+        private void UpdateSubTotal()
+        {
+            SubTotal = UnitPrice * Quantity; // Update subtotal
+        }
+
+        public void RemoveDiscount()
+        {
+            UnitPrice = (double)_discountManager.RemoveDiscount();
+            UpdateSubTotal(); // Ensure subtotal is updated
         }
         public override string ToString()
         {

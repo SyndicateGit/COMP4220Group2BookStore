@@ -90,6 +90,61 @@ namespace BookStoreGUI
             orderId.ToString());
         }
 
+        private void discountButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (orderListView.SelectedItem is OrderItem selectedOrderItem)
+            {
+                string discountInput = ShowInputDialog("Enter Discount Percentage", "Discount:");
+
+                if (double.TryParse(discountInput, out double discountPercentage))
+                {
+                    try
+                    {
+                        selectedOrderItem.ApplyDiscount((decimal)discountPercentage);
+                        MessageBox.Show($"Discount applied! New price: {selectedOrderItem.UnitPrice:C}");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error applying discount: {ex.Message}");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Invalid input. Please enter a valid percentage.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select an order item to apply the discount.");
+            }
+        }
+
+        private string ShowInputDialog(string title, string prompt)
+        {
+            // Create a new window for the input dialog
+            Window inputDialog = new Window()
+            {
+                Title = title,
+                Width = 300,
+                Height = 150,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen
+            };
+
+            StackPanel panel = new StackPanel();
+            TextBox textBox = new TextBox() { Margin = new Thickness(10) };
+            Button submitButton = new Button() { Content = "OK", Margin = new Thickness(10) };
+
+            panel.Children.Add(new TextBlock { Text = prompt, Margin = new Thickness(10) });
+            panel.Children.Add(textBox);
+            panel.Children.Add(submitButton);
+            inputDialog.Content = panel;
+
+            submitButton.Click += (sender, e) => { inputDialog.DialogResult = true; inputDialog.Close(); };
+            inputDialog.ShowDialog();
+
+            return textBox.Text;
+        }
+
         private void purchaseHistoryButton_Click(object sender, RoutedEventArgs e)
         {
             PHDialog pHDialog = new PHDialog(userData.UserID);
