@@ -27,6 +27,7 @@ namespace BookStoreGUI
         DataSet dsBookCat;
         UserData userData;
         BookOrder bookOrder;
+        PurchaseHistory purchaseHistory;
         private void loginButton_Click(object sender, RoutedEventArgs e)
         {
             LoginDialog dlg = new LoginDialog();
@@ -87,6 +88,13 @@ namespace BookStoreGUI
             orderId = bookOrder.PlaceOrder(userData.UserID);
             MessageBox.Show("Your order has been placed. Your order id is " +
             orderId.ToString());
+        }
+
+        private void purchaseHistoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            PHDialog pHDialog = new PHDialog(userData.UserID);
+            pHDialog.Owner = this;
+            pHDialog.ShowDialog();
         }
     }
 }

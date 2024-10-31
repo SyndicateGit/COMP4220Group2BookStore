@@ -22,21 +22,32 @@ namespace BookStoreLIB
             {
                 SqlCommand cmd = cn.CreateCommand();
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "down_PlaceOrder";
+                cmd.CommandText = "insertOrder";
+
+                // Input parameter for XML
                 SqlParameter inParameter = new SqlParameter();
-                inParameter.ParameterName = "@xmlOrder";
+                inParameter.ParameterName = "@xml";
                 inParameter.Value = xmlOrder;
                 inParameter.DbType = DbType.String;
                 inParameter.Direction = ParameterDirection.Input;
                 cmd.Parameters.Add(inParameter);
-                SqlParameter ReturnParameter = new SqlParameter();
-                ReturnParameter.ParameterName = "@OrderID";
-                ReturnParameter.Direction = ParameterDirection.ReturnValue;
-                cmd.Parameters.Add(ReturnParameter);
+
+                // Return value for OrderID
+                SqlParameter returnParameter = new SqlParameter();
+                returnParameter.ParameterName = "@ReturnVal";
+                returnParameter.SqlDbType = SqlDbType.Int;
+                returnParameter.Direction = ParameterDirection.ReturnValue;
+                cmd.Parameters.Add(returnParameter);
+
+                // Open connection and execute the command
                 cn.Open();
                 cmd.ExecuteNonQuery();
+
+                // Retrieve the returned OrderID
+                int orderId = (int)returnParameter.Value; // Return value is the first parameter
+
                 cn.Close();
-                return (int)cmd.Parameters["@OrderID"].Value;
+                return orderId;
             }
             catch (Exception ex)
             {
@@ -49,5 +60,6 @@ namespace BookStoreLIB
                     cn.Close();
             }
         }
+
     }
 }
