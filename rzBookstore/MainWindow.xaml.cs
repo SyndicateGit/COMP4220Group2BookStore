@@ -166,5 +166,31 @@ namespace BookStoreGUI
             pHDialog.Owner = this;
             pHDialog.ShowDialog();
         }
+
+        private void profileButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (userData != null && userData.LoggedIn)
+            {
+                // Open the profile dialog and pass the current user data
+                ProfileDialog profileDialog = new ProfileDialog(userData.UserID);
+                profileDialog.Owner = this; // Set this window as the owner
+
+                // Subscribe to the dialog's ProfileUpdated event
+                profileDialog.ProfileUpdated += ProfileDialog_ProfileUpdated;
+
+                profileDialog.ShowDialog(); // Show the profile dialog
+            }
+            else
+            {
+                MessageBox.Show("Please log in to access your profile.");
+            }
+        }
+
+        // Event handler for updating user profile
+        private void ProfileDialog_ProfileUpdated(object sender, EventArgs e)
+        {
+            // Handle the event here if needed, such as refreshing the profile data
+            MessageBox.Show("Profile updated successfully!");
+        }
     }
 }
