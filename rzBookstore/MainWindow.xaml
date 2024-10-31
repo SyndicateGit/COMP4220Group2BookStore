@@ -1,4 +1,4 @@
-﻿<!--********************************************************************************
+<!--********************************************************************************
  * For use by students taking 60-422 (Fall, 2014) to work on assignments and project.
  * Permission required material. Contact: xyuan@uwindsor.ca 
  * *******************************************************************************-->
@@ -69,6 +69,8 @@
                         Content="Proceed to Checkout" Click="chechoutButton_Click" Width="121" Margin="10,0"/>
                 <Button x:Name="purchaseHistoryButton" MinHeight="25" MinWidth="80"
                         Content="Purchase History" Click="purchaseHistoryButton_Click" Width="121" Margin="10,0"/>
+                <Button x:Name="discountButton" MinHeight="25" MinWidth="80"
+            Content="Apply Discount" Click="discountButton_Click" Width="121" Margin="10,0,0,0"/>
             </StackPanel>
         </StackPanel>
 
