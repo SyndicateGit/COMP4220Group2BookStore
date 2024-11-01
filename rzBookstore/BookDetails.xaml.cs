@@ -28,7 +28,7 @@ namespace BookStoreGUI
                 authorTextBlock.Text = book.Author;
                 priceTextBlock.Text = book.Price.ToString("C"); 
 
-                if (book.Stock == 0)
+                if (book.Stock <= 0)
                 {
                     stockStatusTextBlock.Text = "Sold Out";
                     stockStatusTextBlock.Foreground = System.Windows.Media.Brushes.Red;

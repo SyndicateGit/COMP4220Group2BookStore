@@ -43,7 +43,7 @@ namespace BookStoreLIB
                     Title = bookRow["Title"].ToString(),
                     Author = bookRow["Author"].ToString(),
                     Price = Convert.ToDecimal(bookRow["Price"]),
-                    Stock = Convert.ToInt32(bookRow["Stock"]),
+                    Stock = Convert.ToInt32(bookRow["InStock"]),
                     RestockDate = restockDate
                 };
 

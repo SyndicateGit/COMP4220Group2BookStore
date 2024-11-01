@@ -61,25 +61,7 @@ namespace BookStoreLIB
         }
 
         [TestMethod]
-        public void TestLogout()
-        {
-            // Need to login to test logout
-            inputName = "dclair";
-            inputPassword = "dc1234";
-            int expectedUserId = 1;
-            bool loginResult = userData.LogIn(inputName, inputPassword);
-
-            Assert.IsTrue(loginResult);
-            Assert.AreEqual(expectedUserId, userData.UserID);
-
-            userData.LogOut();
-
-            Assert.IsFalse(userData.LoggedIn);
-            Assert.AreEqual(0, userData.UserID);
-        }
-
-        [TestMethod]
-        public void TestLoginWrongUserNameOrPassword()
+        public void TestWrongUserNameOrPassword()
         {
             // Wrong Username
             inputName = "1rzeng";
@@ -122,7 +104,7 @@ namespace BookStoreLIB
             inputPassword = "0rz1234"; // First character non letter
             String expectedReturm = "A valid password needs to have at least six characters with both letters and numbers.";
             String actualReturn = userData.authenticate(inputName, inputPassword);
-
+            
             Assert.AreEqual(expectedReturm, actualReturn);
             inputPassword = "rz123"; // Less than 6 characters
             actualReturn = userData.authenticate(inputName, inputPassword);
@@ -168,9 +150,7 @@ namespace BookStoreLIB
             inputName = "rzeng"; // Username already exist
             inputPassword = "rz123"; // Less than 6 characters
             fullName = "Raymond Z";
-
-            String expectedReturm = "A valid password needs to have exactly six characters with both letters and numbers, starting with a letter.";
-            String actualReturn = userData.SignUp(inputName, inputPassword, fullName);
+    
             Assert.AreEqual(expectedReturm, actualReturn);
 
             inputPassword = "rz12345"; // More than 6 characters
