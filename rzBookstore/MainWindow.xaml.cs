@@ -21,13 +21,26 @@ using System.Collections.ObjectModel;
 
 namespace BookStoreGUI
 {
-    /// Interaction logic for MainWindow.xaml
     public partial class MainWindow : Window
     {
         DataSet dsBookCat;
         UserData userData;
         BookOrder bookOrder;
         PurchaseHistory purchaseHistory;
+        private int currentUserId; // Added to track the logged-in user's ID
+
+        public MainWindow() { InitializeComponent(); }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            BookCatalog bookCat = new BookCatalog();
+            dsBookCat = bookCat.GetBookInfo();
+            this.DataContext = dsBookCat.Tables["Category"];
+            bookOrder = new BookOrder();
+            userData = new UserData();
+            this.orderListView.ItemsSource = bookOrder.OrderItemList;
+        }
+
         private void loginButton_Click(object sender, RoutedEventArgs e)
         {
             if (userData.LoggedIn)
@@ -43,15 +56,15 @@ namespace BookStoreGUI
                 LoginDialog dlg = new LoginDialog();
                 dlg.Owner = this;
                 dlg.ShowDialog();
-                // Process data entered by user if dialog box is accepted
+
                 if (dlg.DialogResult == true)
                 {
                     if (userData.LogIn(dlg.nameTextBox.Text, dlg.passwordTextBox.Password) == true)
                     {
-                        this.statusTextBlock.Text = "You are logged in as User #" +
-                        userData.UserID;
+                        currentUserId = userData.UserID; // Set currentUserId upon successful login
+                        this.statusTextBlock.Text = "You are logged in as User #" + currentUserId;
                         this.loginButton.Content = "Logout";
-                        this.orderListView.ItemsSource = bookOrder.OrderItemList; // Needed refresh to not be stale between sessions.
+                        this.orderListView.ItemsSource = bookOrder.OrderItemList;
                     }
                     else
                         this.statusTextBlock.Text = "Your login failed. Please try again.";
@@ -60,35 +73,50 @@ namespace BookStoreGUI
         }
 
         private void exitButton_Click(object sender, RoutedEventArgs e) { this.Close(); }
-        public MainWindow() { InitializeComponent(); }
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            BookCatalog bookCat = new BookCatalog();
-            dsBookCat = bookCat.GetBookInfo();
-            this.DataContext = dsBookCat.Tables["Category"];
-            bookOrder = new BookOrder();
-            userData = new UserData();
-            this.orderListView.ItemsSource = bookOrder.OrderItemList;
-        }
+
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
-            OrderItemDialog orderItemDialog = new OrderItemDialog();
-            DataRowView selectedRow;
-            selectedRow = (DataRowView)this.ProductsDataGrid.SelectedItems[0];
-            orderItemDialog.isbnTextBox.Text = selectedRow.Row.ItemArray[0].ToString();
-            orderItemDialog.titleTextBox.Text = selectedRow.Row.ItemArray[2].ToString();
-            orderItemDialog.priceTextBox.Text = selectedRow.Row.ItemArray[4].ToString();
-            orderItemDialog.Owner = this;
-            orderItemDialog.ShowDialog();
-            if (orderItemDialog.DialogResult == true)
+            if (userData != null && userData.LoggedIn)
             {
-                string isbn = orderItemDialog.isbnTextBox.Text;
-                string title = orderItemDialog.titleTextBox.Text;
-                double unitPrice = double.Parse(orderItemDialog.priceTextBox.Text);
-                int quantity = int.Parse(orderItemDialog.quantityTextBox.Text);
-                bookOrder.AddItem(new OrderItem(isbn, title, unitPrice, quantity));
+                if (this.ProductsDataGrid.SelectedItems.Count > 0)
+                {
+                    OrderItemDialog orderItemDialog = new OrderItemDialog();
+                    DataRowView selectedRow = (DataRowView)this.ProductsDataGrid.SelectedItems[0];
+                    orderItemDialog.isbnTextBox.Text = selectedRow.Row.ItemArray[0].ToString();
+                    orderItemDialog.titleTextBox.Text = selectedRow.Row.ItemArray[2].ToString();
+                    orderItemDialog.priceTextBox.Text = selectedRow.Row.ItemArray[4].ToString();
+                    orderItemDialog.Owner = this;
+                    orderItemDialog.ShowDialog();
+
+                    if (orderItemDialog.DialogResult == true)
+                    {
+                        string isbn = orderItemDialog.isbnTextBox.Text;
+                        string title = orderItemDialog.titleTextBox.Text;
+                        double unitPrice = double.Parse(orderItemDialog.priceTextBox.Text);
+                        int quantity = int.Parse(orderItemDialog.quantityTextBox.Text);
+
+                        // Check if the book is already in the order list
+                        if (bookOrder.OrderItemList.Any(item => item.BookID == isbn))
+                        {
+                            MessageBox.Show("This book is already in your order list.");
+                        }
+                        else
+                        {
+                            bookOrder.AddItem(new OrderItem(isbn, title, unitPrice, quantity));
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Please select a book to add to your order list.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please log in to add a book to your order list.");
             }
         }
+
         private void removeButton_Click(object sender, RoutedEventArgs e)
         {
             if (this.orderListView.SelectedItem != null)
@@ -97,12 +125,25 @@ namespace BookStoreGUI
                 bookOrder.RemoveItem(selectedOrderItem.BookID);
             }
         }
+
         private void chechoutButton_Click(object sender, RoutedEventArgs e)
         {
-            int orderId;
-            orderId = bookOrder.PlaceOrder(userData.UserID);
-            MessageBox.Show("Your order has been placed. Your order id is " +
-            orderId.ToString());
+            if (userData != null && userData.LoggedIn)
+            {
+                if (bookOrder.OrderItemList.Count > 0)
+                {
+                    int orderId = bookOrder.PlaceOrder(currentUserId);
+                    MessageBox.Show("Your order has been placed. Your order id is " + orderId.ToString());
+                }
+                else
+                {
+                    MessageBox.Show("Your order list is empty. Please add books before checking out.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please log in to place an order.");
+            }
         }
 
         private void discountButton_Click(object sender, RoutedEventArgs e)
@@ -136,7 +177,6 @@ namespace BookStoreGUI
 
         private string ShowInputDialog(string title, string prompt)
         {
-            // Create a new window for the input dialog
             Window inputDialog = new Window()
             {
                 Title = title,
@@ -162,23 +202,26 @@ namespace BookStoreGUI
 
         private void purchaseHistoryButton_Click(object sender, RoutedEventArgs e)
         {
-            PHDialog pHDialog = new PHDialog(userData.UserID);
-            pHDialog.Owner = this;
-            pHDialog.ShowDialog();
+            if (userData != null && userData.LoggedIn)
+            {
+                PHDialog pHDialog = new PHDialog(currentUserId);
+                pHDialog.Owner = this;
+                pHDialog.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Please log in to view your purchase history.");
+            }
         }
 
         private void profileButton_Click(object sender, RoutedEventArgs e)
         {
             if (userData != null && userData.LoggedIn)
             {
-                // Open the profile dialog and pass the current user data
-                ProfileDialog profileDialog = new ProfileDialog(userData.UserID);
-                profileDialog.Owner = this; // Set this window as the owner
-
-                // Subscribe to the dialog's ProfileUpdated event
+                ProfileDialog profileDialog = new ProfileDialog(currentUserId);
+                profileDialog.Owner = this;
                 profileDialog.ProfileUpdated += ProfileDialog_ProfileUpdated;
-
-                profileDialog.ShowDialog(); // Show the profile dialog
+                profileDialog.ShowDialog();
             }
             else
             {
@@ -186,11 +229,75 @@ namespace BookStoreGUI
             }
         }
 
-        // Event handler for updating user profile
         private void ProfileDialog_ProfileUpdated(object sender, EventArgs e)
         {
-            // Handle the event here if needed, such as refreshing the profile data
             MessageBox.Show("Profile updated successfully!");
+        }
+
+        // Updated AddToWatchlist_Click to use currentUserId directly
+        private void AddToWatchlist_Click(object sender, RoutedEventArgs e)
+        {
+            if (userData != null && userData.LoggedIn)
+            {
+                var selectedISBN = GetSelectedBookISBN();
+
+                if (selectedISBN != null)
+                {
+                    try
+                    {
+                        DALUserProfile userProfileDal = new DALUserProfile();
+                        var watchlist = userProfileDal.GetUserWatchlist(currentUserId);
+
+                        // Check if the book is already in the watchlist
+                        if (watchlist.Contains(selectedISBN))
+                        {
+                            MessageBox.Show("This book is already in your watchlist.");
+                        }
+                        else
+                        {
+                            userProfileDal.AddToWatchlist(currentUserId, selectedISBN);
+                            MessageBox.Show("Book added to watchlist.");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error adding book to watchlist: {ex.Message}");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Please select a book to add to your watchlist.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please log in to add books to your watchlist.");
+            }
+        }
+
+        private void viewWatchlistButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (userData != null && userData.LoggedIn)
+            {
+                DALUserProfile userProfileDal = new DALUserProfile();
+                var watchlist = userProfileDal.GetUserWatchlist(currentUserId);
+
+                MessageBox.Show(string.Join(Environment.NewLine, watchlist), "Your Watchlist");
+            }
+            else
+            {
+                MessageBox.Show("Please log in to view your watchlist.");
+            }
+        }
+
+        private string GetSelectedBookISBN()
+        {
+            if (ProductsDataGrid.SelectedItem != null)
+            {
+                DataRowView selectedRow = (DataRowView)ProductsDataGrid.SelectedItem;
+                return selectedRow["ISBN"].ToString();
+            }
+            return null;
         }
     }
 }
