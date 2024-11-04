@@ -139,7 +139,7 @@ namespace BookStoreLIB
         [TestMethod]
         public void TestSignupUniqueUser()
         {
-            inputName = "test1"; // Increment by 1 every test to ensure unique username
+            inputName = "testUser_" + DateTime.Now.ToString("HHmmss"); // Uses datetime to make username unique
             inputPassword = "te1234";
             fullName = "test";
 
