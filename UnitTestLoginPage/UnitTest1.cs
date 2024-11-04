@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Data;
+using System.Windows.Controls;
 
 namespace BookStoreLIB
 {
@@ -15,20 +16,20 @@ namespace BookStoreLIB
         [TestMethod]
         public void TestPurchaseHistory()
         {
-            
+
             int testUserId = 8;
             PurchaseHistory purchaseHistory = new PurchaseHistory();
 
             DataSet result = purchaseHistory.GetPurchaseHistory(testUserId);
 
-           
+
             Assert.IsNotNull(result, "Purchase history should not be null");
             Assert.IsTrue(result.Tables["PurchaseHistory"].Rows.Count > 0, "Purchase history should return at least one row");
 
-            
+
             DataRow firstRow = result.Tables["PurchaseHistory"].Rows[0];
-            Assert.AreEqual(15, firstRow["OrderID"]); 
-            Assert.AreEqual("Jon Skeet", firstRow["Author"]); 
+            Assert.AreEqual(15, firstRow["OrderID"]);
+            Assert.AreEqual("Jon Skeet", firstRow["Author"]);
             Assert.AreEqual("NULLC# in Depth", firstRow["Title"]);
 
             DateTime expectedDate = DateTime.Parse("10/17/2024 5:23:40 PM");
@@ -154,7 +155,7 @@ namespace BookStoreLIB
             inputName = "rzeng"; // Username already exist
             inputPassword = "rz1234";
             fullName = "Raymond Z";
-            
+
             String expectedReturm = "Username already exists. Please choose a different username.";
             String actualReturn = userData.SignUp(inputName, inputPassword, fullName);
 
@@ -181,4 +182,5 @@ namespace BookStoreLIB
             Assert.AreEqual(expectedReturm, actualReturn);
         }
     }
+
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -69,7 +70,64 @@ namespace BookStoreLIB
                 }
             }
         }
+
+        // Method to add a book to the user's watchlist
+        public void AddToWatchlist(int userID, string isbn)
+        {
+            try
+            {
+                string query = "INSERT INTO Watchlist (UserID, ISBN) VALUES (@userID, @isbn)";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@userID", userID);
+                cmd.Parameters.AddWithValue("@isbn", isbn);
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions (optional logging)
+            }
+            finally
+            {
+                if (conn.State == System.Data.ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+            }
+        }
+
+        // Method to get the user's watchlist
+        public List<string> GetUserWatchlist(int userID)
+        {
+            List<string> isbnList = new List<string>();
+            try
+            {
+                string query = "SELECT ISBN FROM Watchlist WHERE UserID = @userID";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@userID", userID);
+
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    isbnList.Add(reader.GetString(0));
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions (optional logging)
+            }
+            finally
+            {
+                if (conn.State == System.Data.ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+            }
+            return isbnList;
+        }
     }
 }
-
-
