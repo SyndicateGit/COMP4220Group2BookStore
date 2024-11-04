@@ -88,6 +88,16 @@ namespace BookStoreGUI
                     orderItemDialog.Owner = this;
                     orderItemDialog.ShowDialog();
 
+
+                    int stock = Convert.ToInt32(selectedRow.Row["InStock"]);
+                    if (stock <= 0)
+                    {
+                        string isbn = selectedRow.Row.ItemArray[0].ToString();
+                        BookDetails bookDetailsWindow = new BookDetails(isbn);
+                        bookDetailsWindow.ShowDialog();
+                        return;
+                    }
+
                     if (orderItemDialog.DialogResult == true)
                     {
                         string isbn = orderItemDialog.isbnTextBox.Text;

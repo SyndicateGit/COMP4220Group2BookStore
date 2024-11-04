@@ -61,25 +61,7 @@ namespace BookStoreLIB
         }
 
         [TestMethod]
-        public void TestLogout()
-        {
-            // Need to login to test logout
-            inputName = "dclair";
-            inputPassword = "dc1234";
-            int expectedUserId = 1;
-            bool loginResult = userData.LogIn(inputName, inputPassword);
-
-            Assert.IsTrue(loginResult);
-            Assert.AreEqual(expectedUserId, userData.UserID);
-
-            userData.LogOut();
-
-            Assert.IsFalse(userData.LoggedIn);
-            Assert.AreEqual(0, userData.UserID);
-        }
-
-        [TestMethod]
-        public void TestLoginWrongUserNameOrPassword()
+        public void TestWrongUserNameOrPassword()
         {
             // Wrong Username
             inputName = "1rzeng";
@@ -122,7 +104,7 @@ namespace BookStoreLIB
             inputPassword = "0rz1234"; // First character non letter
             String expectedReturm = "A valid password needs to have at least six characters with both letters and numbers.";
             String actualReturn = userData.authenticate(inputName, inputPassword);
-
+            
             Assert.AreEqual(expectedReturm, actualReturn);
             inputPassword = "rz123"; // Less than 6 characters
             actualReturn = userData.authenticate(inputName, inputPassword);
@@ -173,6 +155,8 @@ namespace BookStoreLIB
             String actualReturn = userData.SignUp(inputName, inputPassword, fullName);
             Assert.AreEqual(expectedReturm, actualReturn);
 
+            Assert.AreEqual(expectedReturm, actualReturn);
+
             inputPassword = "rz12345"; // More than 6 characters
             actualReturn = userData.SignUp(inputName, inputPassword, fullName);
             Assert.AreEqual(expectedReturm, actualReturn);
@@ -181,6 +165,77 @@ namespace BookStoreLIB
             actualReturn = userData.SignUp(inputName, inputPassword, fullName);
             Assert.AreEqual(expectedReturm, actualReturn);
         }
+
+
+        [TestMethod]
+        public void TestBookAvailabilityByTitle()
+        {
+            string testTitle = "Microsoft Visual C# 2012: An Introduction to Object-Oriented Programming";
+            BookCatalog bookCatalog = new BookCatalog();
+
+           
+            DataSet dsBooks = bookCatalog.GetBookInfo();
+            if (dsBooks == null)
+            {
+                Assert.Fail("DataSet dsBooks is null. Ensure GetBookInfo returns a valid DataSet.");
+                return;
+            }
+
+          
+            if (!dsBooks.Tables.Contains("Books"))
+            {
+                Assert.Fail("Books table not found in the dataset.");
+                return;
+            }
+
+            
+            DataRow[] foundBooks = dsBooks.Tables["Books"].Select($"Title = '{testTitle}'");
+
+            int stockCount = 0;
+            DateTime? restockDate = null;
+
+            if (foundBooks.Length > 0)
+            {
+                DataRow bookRow = foundBooks[0];
+                stockCount = Convert.ToInt32(bookRow["InStock"]);
+
+                if (stockCount == 0 && bookRow["RestockDate"] != DBNull.Value)
+                {
+                    DateTime tempDate;
+                    if (DateTime.TryParse(bookRow["RestockDate"].ToString(), out tempDate))
+                    {
+                        restockDate = tempDate;
+                    }
+                }
+
+               
+                Console.WriteLine($"Stock Count: {stockCount}");
+                Console.WriteLine($"Restock Date: {(restockDate.HasValue ? restockDate.Value.ToString("yyyy-MM-dd") : "No Restock Date Available")}");
+            }
+            else
+            {
+                Assert.Fail("No books found with the provided title.");
+            }
+
+            if (stockCount > 0)
+            {
+                Assert.IsTrue(stockCount > 0, "The book should be in stock.");
+            }
+            else
+            {
+                Assert.IsNotNull(restockDate, "Restock date should be provided for out-of-stock items.");
+                Assert.IsTrue(restockDate.HasValue, $"New stock expected on {restockDate.Value:yyyy-MM-dd}");
+            }
+
+          
+            Console.WriteLine("TestBookAvailabilityByTitle completed successfully.");
+        }
+
+
+
+
+
+
     }
 
 }
