@@ -150,7 +150,11 @@ namespace BookStoreLIB
             inputName = "rzeng"; // Username already exist
             inputPassword = "rz123"; // Less than 6 characters
             fullName = "Raymond Z";
-    
+
+            String expectedReturm = "A valid password needs to have exactly six characters with both letters and numbers, starting with a letter.";
+            String actualReturn = userData.SignUp(inputName, inputPassword, fullName);
+            Assert.AreEqual(expectedReturm, actualReturn);
+
             Assert.AreEqual(expectedReturm, actualReturn);
 
             inputPassword = "rz12345"; // More than 6 characters

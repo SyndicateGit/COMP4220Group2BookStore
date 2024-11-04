@@ -74,39 +74,6 @@ namespace BookStoreLIB
             }
         }
 
-        public String SignUp(string signupName, string password, string fullName)
-        {
-            if (signupName.Length == 0 || password.Length == 0 || fullName.Length == 0)
-            {
-                return "Please fill in all fields.";
-            }
-
-            if (!validPassword(password))
-            {
-                return "A valid password needs to have exactly six characters with both letters and numbers, starting with a letter.";
-            }
-
-            var dbUser = new DALUserInfo();
-            int result = dbUser.Signup(signupName, password, fullName);
-
-            if (result > 0)
-            {
-                UserID = result;
-                LoginName = signupName;
-                Password = password;
-                LoggedIn = true;
-                return "Success";
-            }
-            else if (result == -1)
-            {
-                return "Username already exists. Please choose a different username.";
-            }
-            else
-            {
-                return "An error occurred during signup. Please try again.";
-            }
-        }
-
         public String authenticate(String userName, String password)
         {
             if (userName.Length == 0 || password.Length == 0)
