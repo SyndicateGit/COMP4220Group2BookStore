@@ -185,6 +185,26 @@ namespace BookStoreGUI
             }
         }
 
+        /// DescriptionButton feature
+private void descriptionButton_Click(object sender, RoutedEventArgs e)
+{
+    if (ProductsDataGrid.SelectedItem is DataRowView selectedBook)
+    {
+        string title = selectedBook["Title"].ToString();
+        string author = selectedBook["Author"].ToString();
+        string price = string.Format("{0:C}", selectedBook["Price"]);
+        string year = selectedBook["Year"].ToString();
+
+        string description = $"Title: {title}\nAuthor: {author}\nPrice: {price}\nYear: {year}";
+
+        MessageBox.Show(description,"Book Description");
+    }
+    else
+    {
+        MessageBox.Show("Please select a book from the list to view the description.","No Book Selected");
+    }
+}
+
         private string ShowInputDialog(string title, string prompt)
         {
             Window inputDialog = new Window()
