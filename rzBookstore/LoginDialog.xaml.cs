@@ -29,5 +29,12 @@ namespace BookStoreGUI
                 nameTextBox.Text = signupDialog.usernameTextBox.Text;
             }
         }
+
+        private void settingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            userStngs stg = new userStngs();
+            stg.Owner = this;
+            stg.ShowDialog();
+        }
     }
 }
