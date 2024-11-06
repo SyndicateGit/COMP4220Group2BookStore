@@ -29,7 +29,10 @@ namespace BookStoreGUI
         PurchaseHistory purchaseHistory;
         private int currentUserId; // Added to track the logged-in user's ID
 
-        public MainWindow() { InitializeComponent(); }
+        public MainWindow() 
+        { 
+            InitializeComponent(); 
+        }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {

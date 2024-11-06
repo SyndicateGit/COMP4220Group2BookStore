@@ -82,6 +82,9 @@
     <Compile Include="SignupDialog.xaml.cs">
       <DependentUpon>SignupDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="userStngs.xaml.cs">
+      <DependentUpon>userStngs.xaml</DependentUpon>
+    </Compile>
     <Page Include="BookDetails.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -115,6 +118,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="SignupDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="userStngs.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
