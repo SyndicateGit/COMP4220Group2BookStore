@@ -48,6 +48,7 @@ namespace BookStoreGUI
                 userData.LogOut();
                 this.statusTextBlock.Text = "You have logged out.";
                 this.loginButton.Content = "Login";
+                this.adminDashboardButton.Visibility = Visibility.Hidden;
                 bookOrder.OrderItemList.Clear();
                 this.orderListView.ItemsSource = null;
             }
@@ -65,6 +66,7 @@ namespace BookStoreGUI
                         this.statusTextBlock.Text = "You are logged in as User #" + currentUserId;
                         this.loginButton.Content = "Logout";
                         this.orderListView.ItemsSource = bookOrder.OrderItemList;
+                        this.adminDashboardButton.Visibility = Visibility.Hidden;
                     }
                     // Check if the user is admin and show the admin button if true
                     else if (dlg.nameTextBox.Text == "admin" && dlg.passwordTextBox.Password == "admin")
@@ -72,6 +74,7 @@ namespace BookStoreGUI
                         this.adminDashboardButton.Visibility = Visibility.Visible;
                         this.statusTextBlock.Text = "You are logged in as Admin";
                         this.loginButton.Content = "Logout";
+                        userData.LoggedIn = true;
                         this.orderListView.ItemsSource = bookOrder.OrderItemList;
                     }
                     else
