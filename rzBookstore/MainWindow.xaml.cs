@@ -66,6 +66,14 @@ namespace BookStoreGUI
                         this.loginButton.Content = "Logout";
                         this.orderListView.ItemsSource = bookOrder.OrderItemList;
                     }
+                    // Check if the user is admin and show the admin button if true
+                    else if (dlg.nameTextBox.Text == "admin" && dlg.passwordTextBox.Password == "admin")
+                    {
+                        this.adminDashboardButton.Visibility = Visibility.Visible;
+                        this.statusTextBlock.Text = "You are logged in as Admin";
+                        this.loginButton.Content = "Logout";
+                        this.orderListView.ItemsSource = bookOrder.OrderItemList;
+                    }
                     else
                         this.statusTextBlock.Text = "Your login failed. Please try again.";
                 }
@@ -186,24 +194,24 @@ namespace BookStoreGUI
         }
 
         /// DescriptionButton feature
-private void descriptionButton_Click(object sender, RoutedEventArgs e)
-{
-    if (ProductsDataGrid.SelectedItem is DataRowView selectedBook)
-    {
-        string title = selectedBook["Title"].ToString();
-        string author = selectedBook["Author"].ToString();
-        string price = string.Format("{0:C}", selectedBook["Price"]);
-        string year = selectedBook["Year"].ToString();
+        private void descriptionButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ProductsDataGrid.SelectedItem is DataRowView selectedBook)
+            {
+                string title = selectedBook["Title"].ToString();
+                string author = selectedBook["Author"].ToString();
+                string price = string.Format("{0:C}", selectedBook["Price"]);
+                string year = selectedBook["Year"].ToString();
 
-        string description = $"Title: {title}\nAuthor: {author}\nPrice: {price}\nYear: {year}";
+                string description = $"Title: {title}\nAuthor: {author}\nPrice: {price}\nYear: {year}";
 
-        MessageBox.Show(description,"Book Description");
-    }
-    else
-    {
-        MessageBox.Show("Please select a book from the list to view the description.","No Book Selected");
-    }
-}
+                MessageBox.Show(description,"Book Description");
+            }
+            else
+            {
+                MessageBox.Show("Please select a book from the list to view the description.","No Book Selected");
+            }
+        }
 
         private string ShowInputDialog(string title, string prompt)
         {
@@ -329,5 +337,13 @@ private void descriptionButton_Click(object sender, RoutedEventArgs e)
             }
             return null;
         }
+
+        private void adminDashboardButton_Click(object sender, RoutedEventArgs e)
+        {
+            AdminDashboard adminDashboard = new AdminDashboard();
+            adminDashboard.Owner = this;
+            adminDashboard.ShowDialog();
+        }
+
     }
 }
