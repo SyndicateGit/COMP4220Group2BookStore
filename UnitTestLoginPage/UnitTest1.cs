@@ -166,6 +166,21 @@ namespace BookStoreLIB
             Assert.AreEqual(expectedReturm, actualReturn);
         }
 
+        [TestMethod]
+        public void TestLogout()
+        {
+            // Need to login to test logout
+            inputName = "dclair";
+            inputPassword = "dc1234";
+            int expectedUserId = 1;
+            bool loginResult = userData.LogIn(inputName, inputPassword);
+            Assert.IsTrue(loginResult);
+            Assert.AreEqual(expectedUserId, userData.UserID);
+            userData.LogOut();
+            Assert.IsFalse(userData.LoggedIn);
+            Assert.AreEqual(0, userData.UserID);
+        }
+
 
         [TestMethod]
         public void TestBookAvailabilityByTitle()
