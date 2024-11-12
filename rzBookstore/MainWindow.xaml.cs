@@ -51,6 +51,7 @@ namespace BookStoreGUI
                 userData.LogOut();
                 this.statusTextBlock.Text = "You have logged out.";
                 this.loginButton.Content = "Login";
+                this.adminDashboardButton.Visibility = Visibility.Hidden;
                 bookOrder.OrderItemList.Clear();
                 this.orderListView.ItemsSource = null;
             }
@@ -67,6 +68,16 @@ namespace BookStoreGUI
                         currentUserId = userData.UserID; // Set currentUserId upon successful login
                         this.statusTextBlock.Text = "You are logged in as User #" + currentUserId;
                         this.loginButton.Content = "Logout";
+                        this.orderListView.ItemsSource = bookOrder.OrderItemList;
+                        this.adminDashboardButton.Visibility = Visibility.Hidden;
+                    }
+                    // Check if the user is admin and show the admin button if true
+                    else if (dlg.nameTextBox.Text == "admin" && dlg.passwordTextBox.Password == "admin")
+                    {
+                        this.adminDashboardButton.Visibility = Visibility.Visible;
+                        this.statusTextBlock.Text = "You are logged in as Admin";
+                        this.loginButton.Content = "Logout";
+                        userData.LoggedIn = true;
                         this.orderListView.ItemsSource = bookOrder.OrderItemList;
                     }
                     else
@@ -189,24 +200,24 @@ namespace BookStoreGUI
         }
 
         /// DescriptionButton feature
-private void descriptionButton_Click(object sender, RoutedEventArgs e)
-{
-    if (ProductsDataGrid.SelectedItem is DataRowView selectedBook)
-    {
-        string title = selectedBook["Title"].ToString();
-        string author = selectedBook["Author"].ToString();
-        string price = string.Format("{0:C}", selectedBook["Price"]);
-        string year = selectedBook["Year"].ToString();
+        private void descriptionButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ProductsDataGrid.SelectedItem is DataRowView selectedBook)
+            {
+                string title = selectedBook["Title"].ToString();
+                string author = selectedBook["Author"].ToString();
+                string price = string.Format("{0:C}", selectedBook["Price"]);
+                string year = selectedBook["Year"].ToString();
 
-        string description = $"Title: {title}\nAuthor: {author}\nPrice: {price}\nYear: {year}";
+                string description = $"Title: {title}\nAuthor: {author}\nPrice: {price}\nYear: {year}";
 
-        MessageBox.Show(description,"Book Description");
-    }
-    else
-    {
-        MessageBox.Show("Please select a book from the list to view the description.","No Book Selected");
-    }
-}
+                MessageBox.Show(description,"Book Description");
+            }
+            else
+            {
+                MessageBox.Show("Please select a book from the list to view the description.","No Book Selected");
+            }
+        }
 
         private string ShowInputDialog(string title, string prompt)
         {
@@ -333,6 +344,7 @@ private void descriptionButton_Click(object sender, RoutedEventArgs e)
             return null;
         }
 
+
         private void settingsButton_Click(object sender, RoutedEventArgs e)
         {
             if (userData != null && userData.LoggedIn)
@@ -344,6 +356,12 @@ private void descriptionButton_Click(object sender, RoutedEventArgs e)
             }
             else
                 MessageBox.Show("Must sign in first");
+        }
+         private void adminDashboardButton_Click(object sender, RoutedEventArgs e)
+        {
+            AdminDashboard adminDashboard = new AdminDashboard();
+            adminDashboard.Owner = this;
+            adminDashboard.ShowDialog();
         }
     }
 }
