@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO.Packaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,10 +21,10 @@ namespace BookStoreLIB
         }
 
         // Method to update user profile information
-        public bool UpdateUserProfile(int userID, string name, string phone, string email, string address)
+        public bool UpdateUserProfile(int userID, string name, string phone, string email, string address, string password)
         {
             DALUserProfile dalUserProfile = new DALUserProfile();
-            return dalUserProfile.UpdateUserProfile(userID, name, phone, email, address);
+            return dalUserProfile.UpdateUserProfile(userID, name, phone, email, address, password);
         }
 
         // Method to add a book to the user's watchlist

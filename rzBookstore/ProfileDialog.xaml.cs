@@ -28,6 +28,7 @@ namespace BookStoreGUI
                 phoneTextBox.Text = userDataRow["Phone"].ToString();
                 emailTextBox.Text = userDataRow["Email"].ToString();
                 addressTextBox.Text = userDataRow["Address"].ToString();
+                passwordTextBox.Text = userDataRow["Password"].ToString();
             }
             else
             {
@@ -42,12 +43,13 @@ namespace BookStoreGUI
             string updatedPhone = phoneTextBox.Text;
             string updatedEmail = emailTextBox.Text;
             string updatedAddress = addressTextBox.Text;
+            string updatedPassword = passwordTextBox.Text;
 
             // Create an instance of the userProfile class
             userProfile profile = new userProfile();
 
             // Update the user profile in the database
-            bool isUpdated = profile.UpdateUserProfile(_userID, updatedName, updatedPhone, updatedEmail, updatedAddress);
+            bool isUpdated = profile.UpdateUserProfile(_userID, updatedName, updatedPhone, updatedEmail, updatedAddress, updatedPassword);
 
             // Check if the update was successful
             if (isUpdated)

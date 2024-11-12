@@ -332,5 +332,18 @@ private void descriptionButton_Click(object sender, RoutedEventArgs e)
             }
             return null;
         }
+
+        private void settingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (userData != null && userData.LoggedIn)
+            {
+                currentUserId = userData.UserID;
+                userStngs stg = new userStngs(currentUserId);
+                stg.Owner = this;
+                stg.ShowDialog();
+            }
+            else
+                MessageBox.Show("Must sign in first");
+        }
     }
 }
