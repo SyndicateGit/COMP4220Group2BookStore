@@ -1,18 +1,22 @@
-﻿<Window x:Class="BookStoreGUI.userStngs"
+<Window x:Class="BookStoreGUI.userStngs"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="User Settings" Height="524" Width="550">
     <Grid>
-        <Label Content="User Settings" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"
+        <Label Content="{Binding LoggedInUserName}" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"
                VerticalAlignment="Top" Margin="0,20,0,0"/>
 
-        <StackPanel x:Name="LayoutRoot1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Width="550">
+        <StackPanel x:Name="LayoutRoot1" Orientation="Vertical" 
+                    HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="550" Height="300">
+            
             <Button x:Name="balanceButton" Height="35" Width="150"
-                    Content="Account Balance" Click="balanceButton_Click"/>
-            <Button x:Name="updataPassButton" Height="35" Width="150"
-                    Content="Update Password" Click="updatePassButton_Click" Margin="0,10,0,0"/>
-            <Button x:Name="deleteAccButton" Height="35" Width="150"
+                    Content="Account Balance" Click="balanceButton_Click" Margin="0,10,0,0"/>
+
+        
+            <Button x:Name="deleteAccButton" Height="35" Width="150" 
                     Content="Delete Account" Click="deleteAccButton_Click" Margin="0,10,0,0"/>
+            <Button x:Name="exitButton" Height="35" Width="150" 
+                    Content="Exit" Click="exitButton_Click" Margin="0,10,0,0"/>
         </StackPanel>
     </Grid>
 </Window>
