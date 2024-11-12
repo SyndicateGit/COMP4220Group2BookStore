@@ -70,20 +70,21 @@
 
             <!-- Align all buttons in the same panel -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                <Button x:Name="addButton" MinHeight="25" MinWidth="121"
-                        Content="Add Book" Click="addButton_Click" />
+
                 <Button x:Name="checkoutOrderButton" MinHeight="25" MinWidth="80"
                         Content="Proceed to Checkout" Click="chechoutButton_Click" Width="121" Margin="10,0"/>
                 <Button x:Name="discountButton" MinHeight="25" MinWidth="80"
                         Content="Apply Discount" Click="discountButton_Click" Width="121" Margin="10,0,0,0"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                <Button x:Name="purchaseHistoryButton" MinHeight="25" MinWidth="80"
-                        Content="Purchase History" Click="purchaseHistoryButton_Click" Width="121" Margin="10,0"/>
-                <Button x:Name="profileButton" MinHeight="25" MinWidth="80"
-                        Content="Profile" Click="profileButton_Click"  Width="121" Margin="10,0"/>
-                <Button x:Name="viewWatchlistButton" MinHeight="25" MinWidth="80"
-                        Content="View Watchlist" Click="viewWatchlistButton_Click" Width="121" Margin="10,0"/>
+                <Button x:Name="addBookButton" MinHeight="25" MinWidth="110" Margin="20,0,0,0"
+                        Content="Add Book" Click="addButton_Click" />
+                <Menu VerticalAlignment="Top" Margin="20,0,0,0">
+                    <MenuItem Header="More" MinHeight="25" MinWidth="40" >
+                        <MenuItem Header="Purchase History" Click="purchaseHistoryButton_Click" />
+                        <MenuItem Header="Profile" Click="profileButton_Click" />
+                        <MenuItem Header="View Watchlist" Click="viewWatchlistButton_Click" />
+                        <MenuItem Header="Settings" Click="settingsButton_Click" />
+                    </MenuItem>
+                </Menu>
             </StackPanel>
         </StackPanel>
 
