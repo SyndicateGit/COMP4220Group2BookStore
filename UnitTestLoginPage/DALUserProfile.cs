@@ -37,11 +37,11 @@ namespace BookStoreLIB
         }
 
         // Method to update user profile information
-        public bool UpdateUserProfile(int userID, string name, string phone, string email, string address)
+        public bool UpdateUserProfile(int userID, string name, string phone, string email, string address, string password)
         {
             try
             {
-                string query = "UPDATE UserData SET FullName = @Name, Phone = @Phone, Email = @Email, Address = @Address WHERE UserID = @UserID";
+                string query = "UPDATE UserData SET FullName = @Name, Phone = @Phone, Email = @Email, Address = @Address, Password = @Password WHERE UserID = @UserID";
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@Name", name);
@@ -49,6 +49,7 @@ namespace BookStoreLIB
                     cmd.Parameters.AddWithValue("@Email", email);
                     cmd.Parameters.AddWithValue("@Address", address);
                     cmd.Parameters.AddWithValue("@UserID", userID);
+                    cmd.Parameters.AddWithValue("@Password", password);
 
                     conn.Open();
                     int rowsAffected = cmd.ExecuteNonQuery();
