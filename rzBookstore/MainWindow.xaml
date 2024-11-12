@@ -68,26 +68,25 @@
                 </ListView>
             </StackPanel>
 
-            <!-- Primary Action Buttons Panel -->
+            <!-- Align all buttons in the same panel -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                <Button x:Name="addButton" Content="Add Book" Height="35" Width="120"
-                            Click="addButton_Click" Margin="5"/>
-                <Button x:Name="checkoutOrderButton" Content="Proceed to Checkout" Height="35"
-                            Width="150" Click="chechoutButton_Click" Margin="5"/>
-                <Button x:Name="discountButton" Content="Apply Discount" Height="35"
-                            Width="120" Click="discountButton_Click" Margin="5"/>
-            </StackPanel>
 
-            <!-- Secondary Action Buttons Panel -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                <Button x:Name="purchaseHistoryButton" Content="Purchase History"
-                            Height="35" Width="150" Click="purchaseHistoryButton_Click" Margin="5"/>
-                <Button x:Name="profileButton" Content="Profile" Height="35" Width="100"
-                            Click="profileButton_Click" Margin="5"/>
-                <Button x:Name="viewWatchlistButton" Content="View Watchlist" Height="35" 
-                            Width="150" Click="viewWatchlistButton_Click" Margin="5"/>
+                <Button x:Name="checkoutOrderButton" MinHeight="25" MinWidth="80"
+                        Content="Proceed to Checkout" Click="chechoutButton_Click" Width="121" Margin="10,0"/>
+                <Button x:Name="discountButton" MinHeight="25" MinWidth="80"
+                        Content="Apply Discount" Click="discountButton_Click" Width="121" Margin="10,0,0,0"/>
+                <Button x:Name="addBookButton" MinHeight="25" MinWidth="110" Margin="20,0,0,0"
+                        Content="Add Book" Click="addButton_Click" />
+                <Menu VerticalAlignment="Top" Margin="20,0,0,0">
+                    <MenuItem Header="More" MinHeight="25" MinWidth="40" >
+                        <MenuItem Header="Purchase History" Click="purchaseHistoryButton_Click" />
+                        <MenuItem Header="Profile" Click="profileButton_Click" />
+                        <MenuItem Header="View Watchlist" Click="viewWatchlistButton_Click" />
+                        <MenuItem Header="Settings" Click="settingsButton_Click" />
+                    </MenuItem>
+                </Menu>
             </StackPanel>
-            <Button x:Name="adminDashboardButton" Content="Admin Dashboard"
+             <Button x:Name="adminDashboardButton" Content="Admin Dashboard"
                             Height="35" Width="150" Visibility="Collapsed"
                             Click="adminDashboardButton_Click" Margin="5"/>
         </StackPanel>

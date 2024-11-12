@@ -29,7 +29,10 @@ namespace BookStoreGUI
         PurchaseHistory purchaseHistory;
         private int currentUserId; // Added to track the logged-in user's ID
 
-        public MainWindow() { InitializeComponent(); }
+        public MainWindow() 
+        { 
+            InitializeComponent(); 
+        }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -341,12 +344,24 @@ namespace BookStoreGUI
             return null;
         }
 
-        private void adminDashboardButton_Click(object sender, RoutedEventArgs e)
+
+        private void settingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (userData != null && userData.LoggedIn)
+            {
+                currentUserId = userData.UserID;
+                userStngs stg = new userStngs(currentUserId);
+                stg.Owner = this;
+                stg.ShowDialog();
+            }
+            else
+                MessageBox.Show("Must sign in first");
+        }
+         private void adminDashboardButton_Click(object sender, RoutedEventArgs e)
         {
             AdminDashboard adminDashboard = new AdminDashboard();
             adminDashboard.Owner = this;
             adminDashboard.ShowDialog();
         }
-
     }
 }
