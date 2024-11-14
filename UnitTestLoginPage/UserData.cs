@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 
 namespace BookStoreLIB
 {
@@ -15,13 +16,21 @@ namespace BookStoreLIB
         public string LoginName { set; get; }
         public string Password { set; get; }
         public Boolean LoggedIn { set; get; }
-
-        public Boolean LogIn(string loginName, string passWord)
+ 
+        public Boolean LogIn(string loginName, string passWord) 
         {
-            var dbUser = new DALUserInfo();
-            UserID = dbUser.LogIn(loginName, passWord);
+            var dbUser = new DALUserInfo();            
+            UserID = dbUser.LogIn(loginName, passWord);  
             if (UserID > 0)
             {
+
+                if (dbUser.IsUserBanned(UserID))
+                {
+                    MessageBox.Show("Your account has been banned.",
+                                    "Login Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
+                }
+
                 LoginName = loginName;
                 Password = passWord;
                 LoggedIn = true;

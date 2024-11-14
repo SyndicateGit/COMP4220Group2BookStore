@@ -88,6 +88,72 @@ namespace BookStoreLIB
                     conn.Close();
             }
         }
+
+        internal bool BanUserIfValid(int userId, string username, string fullName)
+        {
+            var conn = new SqlConnection(Properties.Settings.Default.MSSQLConnection);
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+
+                cmd.CommandText = "SELECT COUNT(*) FROM UserData WHERE UserID = @UserID AND UserName = @UserName AND FullName = @FullName";
+                cmd.Parameters.AddWithValue("@UserID", userId);
+                cmd.Parameters.AddWithValue("@UserName", username);
+                cmd.Parameters.AddWithValue("@FullName", fullName);
+                conn.Open();
+
+                int userCount = (int)cmd.ExecuteScalar();
+                if (userCount == 0)
+                {
+
+                    return false;
+                }
+
+
+                cmd.CommandText = "UPDATE UserData SET IsBanned = 1 WHERE UserID = @UserID AND UserName = @UserName AND FullName = @FullName";
+                int rowsAffected = cmd.ExecuteNonQuery();
+                return rowsAffected > 0;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+                return false;
+            }
+            finally
+            {
+                if (conn.State == ConnectionState.Open)
+                    conn.Close();
+            }
+        }
+
+        public bool IsUserBanned(int userId)
+        {
+            var conn = new SqlConnection(Properties.Settings.Default.MSSQLConnection);
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = "SELECT IsBanned FROM UserData WHERE UserID = @UserID";
+                cmd.Parameters.AddWithValue("@UserID", userId);
+                conn.Open();
+                bool isBanned = (bool)cmd.ExecuteScalar();
+                return isBanned;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+                return false; // Assume not banned if an error occurs
+            }
+            finally
+            {
+                if (conn.State == ConnectionState.Open)
+                    conn.Close();
+            }
+        }
+
+
+
         public DALUserInfo()
         {
 
