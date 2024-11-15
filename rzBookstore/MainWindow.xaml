@@ -23,10 +23,10 @@
                 <Button Content="Exit" Height="25" x:Name="exitButton"
                         Width="75" Margin="20,2,0,0" Click="exitButton_Click" />
 
-                <!-- Color Change Button -->
-                <Button Content="Change Color" Height="25" x:Name="changeColorButton"
-                        Width="120" Margin="20,2,0,0" Click="ChangeColorButton_Click" HorizontalAlignment="Left"/>
             </StackPanel>
+            <!-- Color Change Button -->
+            <Button Content="Change Color" Height="25" x:Name="changeColorButton"
+            Width="120" Margin="20,0,0,0" Click="ChangeColorButton_Click" HorizontalAlignment="Left"/>
 
             <!-- Products DataGrid -->
             <DataGrid AutoGenerateColumns="False" Height="165" 
