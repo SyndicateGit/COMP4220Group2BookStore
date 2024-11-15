@@ -4,7 +4,9 @@
         Title="XY's BookStore" Height="666" Width="550" Loaded="Window_Loaded">
     <Grid>
         <StackPanel x:Name="LayoutRoot" DataContext="{Binding}"
-                    Orientation="Vertical" HorizontalAlignment="Left" Height="auto" Width="auto">
+                    Orientation="Vertical" HorizontalAlignment="Left" Height="Auto" Width="Auto">
+
+            <!-- Category Section -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                 <Label Content="Categories:" Margin="18,0,0,0"/>
                 <ComboBox ItemsSource="{Binding}" x:Name="categoriesComboBox"
@@ -20,8 +22,13 @@
                         Width="75" Margin="28,2,0,0" Click="loginButton_Click" />
                 <Button Content="Exit" Height="25" x:Name="exitButton"
                         Width="75" Margin="20,2,0,0" Click="exitButton_Click" />
-            </StackPanel>
 
+            </StackPanel>
+            <!-- Color Change Button -->
+            <Button Content="Change Color" Height="25" x:Name="changeColorButton"
+            Width="120" Margin="20,0,0,0" Click="ChangeColorButton_Click" HorizontalAlignment="Left"/>
+
+            <!-- Products DataGrid -->
             <DataGrid AutoGenerateColumns="False" Height="165" 
                       ItemsSource="{Binding drCat_Book}"
                       x:Name="ProductsDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected"
@@ -50,6 +57,7 @@
                 </DataGrid.Columns>
             </DataGrid>
 
+            <!-- Order List Section -->
             <StackPanel Orientation="Vertical">
                 <ListView x:Name="orderListView" MinHeight="150" Width="490"
                           ItemsSource="{Binding}" SelectionMode="Single">
@@ -68,7 +76,7 @@
                 </ListView>
             </StackPanel>
 
-            <!-- Align all buttons in the same panel -->
+            <!-- Buttons for Checkout, Discount, etc. -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
 
                 <Button x:Name="checkoutOrderButton" MinHeight="25" MinWidth="80"
@@ -91,10 +99,12 @@
                             Click="adminDashboardButton_Click" Margin="5"/>
         </StackPanel>
 
+        <!-- Status Bar Section -->
         <StatusBar VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
             <TextBlock x:Name="statusTextBlock">
                 <Run Text="Please login before proceeding to checkout."/>
             </TextBlock>
         </StatusBar>
+
     </Grid>
 </Window>
