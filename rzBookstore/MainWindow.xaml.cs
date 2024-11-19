@@ -335,13 +335,48 @@ namespace BookStoreGUI
         }
 
         private string GetSelectedBookISBN()
-        {
+        { 
             if (ProductsDataGrid.SelectedItem != null)
             {
                 DataRowView selectedRow = (DataRowView)ProductsDataGrid.SelectedItem;
                 return selectedRow["ISBN"].ToString();
             }
             return null;
+        }
+        public void ChangeBackgroundColor(string colorName)
+        {
+            // Change the background color of the window based on the passed color name
+            switch (colorName.ToLower())
+            {
+                case "red":
+                    this.Background = new SolidColorBrush(Colors.Red);
+                    break;
+                case "blue":
+                    this.Background = new SolidColorBrush(Colors.Blue);
+                    break;
+                case "green":
+                    this.Background = new SolidColorBrush(Colors.Green);
+                    break;
+                case "yellow":
+                    this.Background = new SolidColorBrush(Colors.Yellow);
+                    break;
+                default:
+                    this.Background = new SolidColorBrush(Colors.White);  // Default to White if color is invalid
+                    break;
+            }
+        }
+        private void ChangeColorButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Example color change logic
+            // Here you can let the user choose or pick a color. I'll use a hardcoded example for now.
+            // Change the background color to a random color each time the button is clicked.
+
+            string[] colors = new string[] { "red", "blue", "green", "yellow" };
+            Random random = new Random();
+            string selectedColor = colors[random.Next(colors.Length)];
+
+            // Call the ChangeBackgroundColor method to update the background
+            ChangeBackgroundColor(selectedColor);
         }
 
 
