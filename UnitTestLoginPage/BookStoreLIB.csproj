@@ -60,6 +60,7 @@
     <Compile Include="BookCatalog.cs" />
     <Compile Include="BookOrder.cs" />
     <Compile Include="DALBookCatalog.cs" />
+    <Compile Include="DALDeleteAcc.cs" />
     <Compile Include="DALOrder.cs" />
     <Compile Include="DALPurchaseHistory.cs" />
     <Compile Include="DALUserInfo.cs" />
