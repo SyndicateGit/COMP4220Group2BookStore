@@ -19,7 +19,7 @@ namespace BookStoreGUI
             InitializeComponent();
             _userID = userID; // Save the user ID for later use
             LoadUserProfile(userID);
-            LoadProfilePicture(_userId);
+            LoadProfilePicture(_userID);
         }
 
         private void LoadUserProfile(int userID)
@@ -116,7 +116,7 @@ namespace BookStoreGUI
                     if (_newProfilePictureData != null)
                     {
                         DALUpload dalUpload = new DALUpload();
-                        bool pictureUpdated = dalUpload.UpdateProfilePicture(_userId, _newProfilePictureData);
+                        bool pictureUpdated = dalUpload.UpdateProfilePicture(_userID, _newProfilePictureData);
 
                     if (pictureUpdated)
                     {

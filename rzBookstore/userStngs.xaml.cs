@@ -30,7 +30,7 @@ namespace BookStoreGUI
             InitializeComponent();
             DataContext = this;
             _userId = userId;
-            getUsername(userId)
+            getUserName(userId);
            
         }
 
