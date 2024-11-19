@@ -24,7 +24,7 @@ namespace BookStoreGUI
 
         private void LoadUserProfile(int userID)
         {
-            DALUserProfile profile = new DALUserProfile();
+            userProfile profile = new userProfile();
             var userDataRow = profile.GetUserProfile(userID);
 
             if (userDataRow != null)
@@ -105,7 +105,7 @@ namespace BookStoreGUI
             string updatedPassword = passwordTextBox.Text;
 
             // Create an instance of the userProfile class
-            DALUserProfile profile = new DALUserProfile();
+            userProfile profile = new userProfile();
 
             // Update the user profile in the database
             bool isUpdated = profile.UpdateUserProfile(_userID, updatedName, updatedPhone, updatedEmail, updatedAddress, updatedPassword);
