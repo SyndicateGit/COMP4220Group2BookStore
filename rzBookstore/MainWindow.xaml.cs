@@ -401,9 +401,9 @@ namespace BookStoreGUI
 
         private void bookQuotesButton_Click(Object sender, RoutedEventArgs e)
         {
-            BookQuotes bookQuotes = new BookQuotes();
-            bookQuotes.Owner = this;
-            bookQuotes.ShowDialog();
+            BQDialog bq = new BQDialog();
+            bq.Owner = this;
+            bq.ShowDialog();
         }
     }
 }

@@ -88,8 +88,8 @@
     <Compile Include="userStngs.xaml.cs">
       <DependentUpon>userStngs.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BookQuotes.xaml.cs">
-      <DependentUpon>BookQuotes.xaml</DependentUpon>
+    <Compile Include="BQDialog.xaml.cs">
+      <DependentUpon>BQDialog.xaml</DependentUpon>
     </Compile>
     <Page Include="AdminDashboard.xaml">
       <SubType>Designer</SubType>
@@ -135,7 +135,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="BookQuotes.xaml">
+    <Page Include="BQDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

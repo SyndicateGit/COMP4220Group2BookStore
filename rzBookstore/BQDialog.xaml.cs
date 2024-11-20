@@ -17,16 +17,16 @@ using BookStoreLIB;
 namespace BookStoreGUI
 {
     /// <summary>
-    /// Interaction logic for BookQuotes.xaml
+    /// Interaction logic for BQDialog.xaml
     /// </summary>
-    public partial class BookQuotes : Window
+    public partial class BQDialog : Window
     {
-        public BookQuotes()
+        public BQDialog()
         {
             InitializeComponent();
 
-            BookQuotes bookQuotes = new BookQuotes();
-            DataSet ds = bookQuotes.getBookQuotes();
+            BQDialog bookQuotes = new BQDialog();
+            DataSet ds = BQDialog.getBookQuotes();
         }
     }
 }
