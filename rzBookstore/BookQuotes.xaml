@@ -7,6 +7,24 @@
         mc:Ignorable="d"
         Title="Window1" Height="450" Width="800">
     <Grid>
-        
+        <!-- DataGrid for Purchase History -->
+        <DataGrid x:Name="bookQuotes" 
+              AutoGenerateColumns="False" 
+              HorizontalAlignment="Stretch" 
+              VerticalAlignment="Stretch"
+              Margin="10,10,10,50">
+            <!-- Adjust margin for button placement -->
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Quote ID" Binding="{Binding Quote_id}" Width="100"/>
+                <DataGridTextColumn Header="Book Title" Binding="{Binding Book_Title}" Width="150"/>
+                <DataGridTextColumn Header="Author" Binding="{Binding Book_Author}" Width="200"/>
+                <DataGridTextColumn Header="Quote" Binding="{Binding Quote}" Width="120"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Exit Button in the Bottom-Right Corner -->
+        <Button x:Name="exitButton" Click="exitButton_Click" IsCancel="True"
+            Content="Exit" MinWidth="80" Margin="10"
+            HorizontalAlignment="Right" VerticalAlignment="Bottom" />
     </Grid>
 </Window>
