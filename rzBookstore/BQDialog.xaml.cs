@@ -25,8 +25,18 @@ namespace BookStoreGUI
         {
             InitializeComponent();
 
-            BQDialog bookQuotes = new BQDialog();
-            DataSet ds = BQDialog.getBookQuotes();
+            BookQuotes quotes = new BookQuotes();
+            DataSet ds = quotes.getBookQuotes();
+
+            if (ds != null && ds.Tables["BookQuotes"].Rows.Count > 0)
+            {
+                // Bind the DataSet to the DataGrid
+                bookquotedatagrid.ItemsSource = ds.Tables["BookQuotes"].DefaultView;
+            }
+            else
+            {
+                MessageBox.Show("No purchase history found for this user.");
+            }
         }
     }
 }

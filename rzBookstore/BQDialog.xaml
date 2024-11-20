@@ -8,7 +8,7 @@
         Title="Window1" Height="450" Width="800">
     <Grid>
         <!-- DataGrid for Book Quotes -->
-        <DataGrid x:Name="BQDialog" 
+        <DataGrid x:Name="bookquotedatagrid" 
               AutoGenerateColumns="False" 
               HorizontalAlignment="Stretch" 
               VerticalAlignment="Stretch"
