@@ -22,8 +22,22 @@
             </DataGrid.Columns>
         </DataGrid>
 
+    <StackPanel Margin="20" Height="160">
+
+            <Label Content="Book:" />
+            <TextBox x:Name="bookTextBox" Width="300" />
+
+            <Label Content="Author:" />
+            <TextBox x:Name="authorTextBox" Width="300" />
+
+            <Label Content="Quote:" />
+            <TextBox x:Name="quoteTextBox" Width="300" />
+
+            <Button x:Name="updateButton" Content="Update" Click="UpdateButton_Click" Width="100" Margin="5" />
+        </StackPanel>
+
         <!-- Exit Button in the Bottom-Right Corner -->
-        <Button x:Name="exitButton" Click="exitButton_Click" IsCancel="True"
+    <Button x:Name="exitButton" Click="exitButton_Click" IsCancel="True"
             Content="Exit" MinWidth="80" Margin="10"
             HorizontalAlignment="Right" VerticalAlignment="Bottom" />
     </Grid>

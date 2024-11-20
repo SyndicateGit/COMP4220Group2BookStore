@@ -38,8 +38,48 @@ namespace BookStoreLIB
             }
             
         }
+
+        public bool addBookQuote(string book_title, string book_author, string quote)
+        {
+            try
+            {
+                string sql = @"INSERT INTO BookQuotes (Quote_id, Book_Title, Book_Author, Quote) 
+                       VALUES (@quote_id, @book_title, @book_author, @quote)";
+                int newQuoteId;
+
+                using (SqlCommand cmd = new SqlCommand("SELECT ISNULL(MAX(Quote_id), 0) + 1 FROM BookQuotes", conn))
+                {
+                    conn.Open();
+                    newQuoteId = (int)cmd.ExecuteScalar();
+                    conn.Close();
+                }
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@quote_id", newQuoteId);
+                    cmd.Parameters.AddWithValue("@book_title", book_title);
+                    cmd.Parameters.AddWithValue("@book_author", book_author);
+                    cmd.Parameters.AddWithValue("@quote", quote);
+
+                    conn.Open();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    conn.Close();
+
+                    return rowsAffected > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+            }
+        }
+
     }
-
-    
-
 }

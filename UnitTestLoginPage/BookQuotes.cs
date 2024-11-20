@@ -15,5 +15,11 @@ namespace BookStoreLIB
             DALBookQuotes bookQuotes = new DALBookQuotes();
             return bookQuotes.getQuotes();
         }
+
+        public bool addBookQuote(string quote_title, string quote_author, string quote)
+        {
+            DALBookQuotes addquote = new DALBookQuotes();
+            return addquote.addBookQuote(quote_title, quote_author, quote);
+        }
     }
 }
