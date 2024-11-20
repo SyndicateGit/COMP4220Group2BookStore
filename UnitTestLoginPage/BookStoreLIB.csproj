@@ -59,6 +59,8 @@
     <Compile Include="Book.cs" />
     <Compile Include="BookCatalog.cs" />
     <Compile Include="BookOrder.cs" />
+    <Compile Include="BookQuotes.cs" />
+    <Compile Include="DALBookQuotes.cs" />
     <Compile Include="DALBookCatalog.cs" />
     <Compile Include="DALOrder.cs" />
     <Compile Include="DALPurchaseHistory.cs" />
