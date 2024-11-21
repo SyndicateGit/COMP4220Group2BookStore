@@ -41,6 +41,21 @@ namespace BookStoreLIB
 
         public bool addBookQuote(string book_title, string book_author, string quote)
         {
+            if (string.IsNullOrWhiteSpace(book_title))
+            {
+                throw new ArgumentException("Book title cannot be empty or null.", nameof(book_title));
+            }
+
+            if (string.IsNullOrWhiteSpace(book_author))
+            {
+                throw new ArgumentException("Book author cannot be empty or null.", nameof(book_author));
+            }
+
+            if (string.IsNullOrWhiteSpace(quote))
+            {
+                throw new ArgumentException("Quote cannot be empty or null.", nameof(quote));
+            }
+
             try
             {
                 string sql = @"INSERT INTO BookQuotes (Quote_id, Book_Title, Book_Author, Quote) 
