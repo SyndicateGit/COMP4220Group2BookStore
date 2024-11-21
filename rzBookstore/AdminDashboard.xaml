@@ -33,6 +33,8 @@
                         <TextBox x:Name="userIDTextBox" Width="100" Margin="10,0"/>
                         <Label Content="Username:" VerticalAlignment="Center" Width="80"/>
                         <TextBox x:Name="usernameTextBox" Width="150" Margin="10,0"/>
+                        <Label Content="Password:" VerticalAlignment="Center" Width="70"/>
+                        <TextBox x:Name="userPassTextBox" Width="150" Margin="10,0"/>
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" Margin="0,5">

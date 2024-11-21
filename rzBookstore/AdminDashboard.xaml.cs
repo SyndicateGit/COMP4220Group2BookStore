@@ -29,7 +29,22 @@ namespace BookStoreGUI
         private void UpdateUser_Click(object sender, RoutedEventArgs e)
         {
 
-            // To be implemented
+            string updatedPassword = userPassTextBox.Text;
+            string username = usernameTextBox.Text;
+            userProfile profile = new userProfile();
+            int isUpdated = profile.UpdateUserPassword(username ,updatedPassword);
+            if(isUpdated>0)
+            {
+                MessageBox.Show("Password updated successfully.");
+            }
+            else if (isUpdated ==0)
+            {
+                MessageBox.Show("Error in updating password");
+            }
+            else
+            {
+                MessageBox.Show("SQL returned an error.");
+            }
         }
 
         // Ban User

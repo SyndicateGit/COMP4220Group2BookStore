@@ -245,8 +245,29 @@ namespace BookStoreLIB
           
             Console.WriteLine("TestBookAvailabilityByTitle completed successfully.");
         }
+        [TestMethod]
+        public void TestUpdateUserPassword()
+        {
+            inputName = "testUser_154849";
+            inputPassword = "te12345";
+            userProfile userInfo = new userProfile();
+            int expectedReturn = 1;
+            int actualReturn = userInfo.UpdateUserPassword(inputName, inputPassword);
+            Assert.AreEqual(expectedReturn, actualReturn);
+            Boolean expectedReturnLogin = true;
+            Boolean actualReturnLogin = userData.LogIn(inputName, inputPassword);
+            Assert.AreEqual (expectedReturnLogin, actualReturnLogin);
+
+            string inputPasswordOld = "te1234";
+            actualReturnLogin = userData.LogIn(inputName, inputPasswordOld);
+            Assert.AreNotEqual(expectedReturnLogin, actualReturnLogin);
+            actualReturn = userInfo.UpdateUserPassword(inputName, inputPasswordOld);
+            Assert.AreEqual(actualReturn, expectedReturn);
+            actualReturnLogin = userData.LogIn(inputName, inputPasswordOld);
+            Assert.AreEqual(expectedReturnLogin, actualReturnLogin);
 
 
+        }
 
 
 
