@@ -30,7 +30,7 @@ namespace BookStoreLIB
                 dsBooks = new DataSet("Books");
                 daCatagory.Fill(dsBooks, "Category");            //Get category info
                 String strSQL2 = "Select ISBN, CategoryID, Title," +
-                    "Author, Price, Year, Edition, Publisher from BookData";
+                    "Author, Price, Year, Edition, Publisher, InStock, RestockDate from BookData";
                 SqlCommand cmdSelBook = new SqlCommand(strSQL2, conn);
                 SqlDataAdapter daBook = new SqlDataAdapter(cmdSelBook);
                 daBook.Fill(dsBooks, "Books");                  //Get Books info
@@ -41,6 +41,31 @@ namespace BookStoreLIB
             }
             catch (Exception ex) { Debug.WriteLine(ex.Message); }
             return dsBooks;
+        }
+
+
+
+        public void UpdateBookStockAndRestock(string ISBN, int newStock, DateTime? restockDate)
+        {
+            try
+            {
+                string strSQL = "UPDATE BookData SET InStock = @Stock, RestockDate = @RestockDate WHERE ISBN = @ISBN";
+                using (SqlCommand cmdUpdate = new SqlCommand(strSQL, conn))
+                {
+                    
+                    cmdUpdate.Parameters.AddWithValue("@Stock", newStock);
+                    cmdUpdate.Parameters.AddWithValue("@RestockDate", (object)restockDate ?? DBNull.Value);  
+                    cmdUpdate.Parameters.AddWithValue("@ISBN", ISBN);
+
+                    conn.Open();
+                    cmdUpdate.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
     }
 }

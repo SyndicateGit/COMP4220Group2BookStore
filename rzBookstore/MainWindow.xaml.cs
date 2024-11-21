@@ -29,7 +29,10 @@ namespace BookStoreGUI
         PurchaseHistory purchaseHistory;
         private int currentUserId; // Added to track the logged-in user's ID
 
-        public MainWindow() { InitializeComponent(); }
+        public MainWindow() 
+        { 
+            InitializeComponent(); 
+        }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -48,6 +51,7 @@ namespace BookStoreGUI
                 userData.LogOut();
                 this.statusTextBlock.Text = "You have logged out.";
                 this.loginButton.Content = "Login";
+                this.adminDashboardButton.Visibility = Visibility.Hidden;
                 bookOrder.OrderItemList.Clear();
                 this.orderListView.ItemsSource = null;
             }
@@ -64,6 +68,16 @@ namespace BookStoreGUI
                         currentUserId = userData.UserID; // Set currentUserId upon successful login
                         this.statusTextBlock.Text = "You are logged in as User #" + currentUserId;
                         this.loginButton.Content = "Logout";
+                        this.orderListView.ItemsSource = bookOrder.OrderItemList;
+                        this.adminDashboardButton.Visibility = Visibility.Hidden;
+                    }
+                    // Check if the user is admin and show the admin button if true
+                    else if (dlg.nameTextBox.Text == "admin" && dlg.passwordTextBox.Password == "admin")
+                    {
+                        this.adminDashboardButton.Visibility = Visibility.Visible;
+                        this.statusTextBlock.Text = "You are logged in as Admin";
+                        this.loginButton.Content = "Logout";
+                        userData.LoggedIn = true;
                         this.orderListView.ItemsSource = bookOrder.OrderItemList;
                     }
                     else
@@ -87,6 +101,16 @@ namespace BookStoreGUI
                     orderItemDialog.priceTextBox.Text = selectedRow.Row.ItemArray[4].ToString();
                     orderItemDialog.Owner = this;
                     orderItemDialog.ShowDialog();
+
+
+                    int stock = Convert.ToInt32(selectedRow.Row["InStock"]);
+                    if (stock <= 0)
+                    {
+                        string isbn = selectedRow.Row.ItemArray[0].ToString();
+                        BookDetails bookDetailsWindow = new BookDetails(isbn);
+                        bookDetailsWindow.ShowDialog();
+                        return;
+                    }
 
                     if (orderItemDialog.DialogResult == true)
                     {
@@ -200,6 +224,26 @@ namespace BookStoreGUI
             else
             {
                 MessageBox.Show("Please select an order item to apply the discount.");
+            }
+        }
+
+        /// DescriptionButton feature
+        private void descriptionButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ProductsDataGrid.SelectedItem is DataRowView selectedBook)
+            {
+                string title = selectedBook["Title"].ToString();
+                string author = selectedBook["Author"].ToString();
+                string price = string.Format("{0:C}", selectedBook["Price"]);
+                string year = selectedBook["Year"].ToString();
+
+                string description = $"Title: {title}\nAuthor: {author}\nPrice: {price}\nYear: {year}";
+
+                MessageBox.Show(description,"Book Description");
+            }
+            else
+            {
+                MessageBox.Show("Please select a book from the list to view the description.","No Book Selected");
             }
         }
 
@@ -319,13 +363,68 @@ namespace BookStoreGUI
         }
 
         private string GetSelectedBookISBN()
-        {
+        { 
             if (ProductsDataGrid.SelectedItem != null)
             {
                 DataRowView selectedRow = (DataRowView)ProductsDataGrid.SelectedItem;
                 return selectedRow["ISBN"].ToString();
             }
             return null;
+        }
+        public void ChangeBackgroundColor(string colorName)
+        {
+            // Change the background color of the window based on the passed color name
+            switch (colorName.ToLower())
+            {
+                case "red":
+                    this.Background = new SolidColorBrush(Colors.Red);
+                    break;
+                case "blue":
+                    this.Background = new SolidColorBrush(Colors.Blue);
+                    break;
+                case "green":
+                    this.Background = new SolidColorBrush(Colors.Green);
+                    break;
+                case "yellow":
+                    this.Background = new SolidColorBrush(Colors.Yellow);
+                    break;
+                default:
+                    this.Background = new SolidColorBrush(Colors.White);  // Default to White if color is invalid
+                    break;
+            }
+        }
+        private void ChangeColorButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Example color change logic
+            // Here you can let the user choose or pick a color. I'll use a hardcoded example for now.
+            // Change the background color to a random color each time the button is clicked.
+
+            string[] colors = new string[] { "red", "blue", "green", "yellow" };
+            Random random = new Random();
+            string selectedColor = colors[random.Next(colors.Length)];
+
+            // Call the ChangeBackgroundColor method to update the background
+            ChangeBackgroundColor(selectedColor);
+        }
+
+
+        private void settingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (userData != null && userData.LoggedIn)
+            {
+                currentUserId = userData.UserID;
+                userStngs stg = new userStngs(currentUserId);
+                stg.Owner = this;
+                stg.ShowDialog();
+            }
+            else
+                MessageBox.Show("Must sign in first");
+        }
+         private void adminDashboardButton_Click(object sender, RoutedEventArgs e)
+        {
+            AdminDashboard adminDashboard = new AdminDashboard();
+            adminDashboard.Owner = this;
+            adminDashboard.ShowDialog();
         }
     }
 }

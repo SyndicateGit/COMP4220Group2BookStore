@@ -1,10 +1,12 @@
 <Window x:Class="BookStoreGUI.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="XY's BookStore" Height="524" Width="550" Loaded="Window_Loaded">
+        Title="XY's BookStore" Height="666" Width="550" Loaded="Window_Loaded">
     <Grid>
         <StackPanel x:Name="LayoutRoot" DataContext="{Binding}"
-                    Orientation="Vertical" HorizontalAlignment="Left" Height="auto" Width="auto">
+                    Orientation="Vertical" HorizontalAlignment="Left" Height="Auto" Width="Auto">
+
+            <!-- Category Section -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                 <Label Content="Categories:" Margin="18,0,0,0"/>
                 <ComboBox ItemsSource="{Binding}" x:Name="categoriesComboBox"
@@ -20,8 +22,13 @@
                         Width="75" Margin="28,2,0,0" Click="loginButton_Click" />
                 <Button Content="Exit" Height="25" x:Name="exitButton"
                         Width="75" Margin="20,2,0,0" Click="exitButton_Click" />
-            </StackPanel>
 
+            </StackPanel>
+            <!-- Color Change Button -->
+            <Button Content="Change Color" Height="25" x:Name="changeColorButton"
+            Width="120" Margin="20,0,0,0" Click="ChangeColorButton_Click" HorizontalAlignment="Left"/>
+
+            <!-- Products DataGrid -->
             <DataGrid AutoGenerateColumns="False" Height="165" 
                       ItemsSource="{Binding drCat_Book}"
                       x:Name="ProductsDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected"
@@ -50,6 +57,7 @@
                 </DataGrid.Columns>
             </DataGrid>
 
+            <!-- Order List Section -->
             <StackPanel Orientation="Vertical">
                 <ListView x:Name="orderListView" MinHeight="150" Width="490"
                           ItemsSource="{Binding}" SelectionMode="Single">
@@ -68,29 +76,35 @@
                 </ListView>
             </StackPanel>
 
-            <!-- Align all buttons in the same panel -->
+            <!-- Buttons for Checkout, Discount, etc. -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                <Button x:Name="addButton" MinHeight="25" MinWidth="121"
-                        Content="Add Book" Click="addButton_Click" />
+
                 <Button x:Name="checkoutOrderButton" MinHeight="25" MinWidth="80"
                         Content="Proceed to Checkout" Click="chechoutButton_Click" Width="121" Margin="10,0"/>
                 <Button x:Name="discountButton" MinHeight="25" MinWidth="80"
                         Content="Apply Discount" Click="discountButton_Click" Width="121" Margin="10,0,0,0"/>
+                <Button x:Name="addBookButton" MinHeight="25" MinWidth="110" Margin="20,0,0,0"
+                        Content="Add Book" Click="addButton_Click" />
+                <Menu VerticalAlignment="Top" Margin="20,0,0,0">
+                    <MenuItem Header="More" MinHeight="25" MinWidth="40" >
+                        <MenuItem Header="Purchase History" Click="purchaseHistoryButton_Click" />
+                        <MenuItem Header="Profile" Click="profileButton_Click" />
+                        <MenuItem Header="View Watchlist" Click="viewWatchlistButton_Click" />
+                        <MenuItem Header="Settings" Click="settingsButton_Click" />
+                    </MenuItem>
+                </Menu>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                <Button x:Name="purchaseHistoryButton" MinHeight="25" MinWidth="80"
-                        Content="Purchase History" Click="purchaseHistoryButton_Click" Width="121" Margin="10,0"/>
-                <Button x:Name="profileButton" MinHeight="25" MinWidth="80"
-                        Content="Profile" Click="profileButton_Click"  Width="121" Margin="10,0"/>
-                <Button x:Name="viewWatchlistButton" MinHeight="25" MinWidth="80"
-                        Content="View Watchlist" Click="viewWatchlistButton_Click" Width="121" Margin="10,0"/>
-            </StackPanel>
+             <Button x:Name="adminDashboardButton" Content="Admin Dashboard"
+                            Height="35" Width="150" Visibility="Collapsed"
+                            Click="adminDashboardButton_Click" Margin="5"/>
         </StackPanel>
 
+        <!-- Status Bar Section -->
         <StatusBar VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
             <TextBlock x:Name="statusTextBlock">
                 <Run Text="Please login before proceeding to checkout."/>
             </TextBlock>
         </StatusBar>
+
     </Grid>
 </Window>
