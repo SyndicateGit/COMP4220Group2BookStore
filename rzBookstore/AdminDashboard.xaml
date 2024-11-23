@@ -57,17 +57,35 @@
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" Margin="0,5">
-                        <Label Content="Author:" VerticalAlignment="Center" Width="80"/>
+                        <Label Content="Category:" VerticalAlignment="Center" Width="80"/>
+                        <ComboBox x:Name="categoryComboBox" Width="200" Margin="10,0" DisplayMemberPath="Name" SelectedValuePath="CategoryID"/>
+                        <Label Content="Author:" VerticalAlignment="Center" Width="50"/>
                         <TextBox x:Name="authorTextBox" Width="200" Margin="10,0"/>
-                        <Label Content="Price:" VerticalAlignment="Center" Width="50"/>
-                        <TextBox x:Name="priceTextBox" Width="100" Margin="10,0"/>
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <Label Content="Price:" VerticalAlignment="Center" Width="80"/>
+                        <TextBox x:Name="priceTextBox" Width="100" Margin="10,0"/>
                         <Label Content="Stock:" VerticalAlignment="Center" Width="80"/>
                         <TextBox x:Name="stockTextBox" Width="100" Margin="10,0"/>
-                        <Label Content="Restock Date:" VerticalAlignment="Center" Width="80"/>
-                        <DatePicker x:Name="restockDatePicker" Width="150" Margin="10,0"/>
+                    </StackPanel>
+
+                    <!-- Additional fields -->
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <Label Content="Supplier:" VerticalAlignment="Center" Width="80"/>
+                        <ComboBox x:Name="supplierComboBox" Width="200" Margin="10,0" DisplayMemberPath="Name" SelectedValuePath="SupplierID"/>
+                        <Label Content="Year:" VerticalAlignment="Center" Width="50"/>
+                        <TextBox x:Name="yearTextBox" Width="100" Margin="10,0"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <Label Content="Edition:" VerticalAlignment="Center" Width="80"/>
+                        <TextBox x:Name="editionTextBox" Width="100" Margin="10,0"/>
+                        <Label Content="Publisher:" VerticalAlignment="Center" Width="80"/>
+                        <TextBox x:Name="publisherTextBox" Width="200" Margin="10,0"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
                         <Button Content="Add Book" Width="100" Margin="10,0" Click="AddBook_Click"/>
                     </StackPanel>
                 </StackPanel>
