@@ -97,6 +97,9 @@
              <Button x:Name="adminDashboardButton" Content="Admin Dashboard"
                             Height="35" Width="150" Visibility="Collapsed"
                             Click="adminDashboardButton_Click" Margin="5"/>
+            <Button x:Name="bookQuotesButton" Content="Book Quotes"
+                            Height="25" Width="120" Click="bookQuotesButton_Click"
+                            Margin="10,20,55,0"/>
         </StackPanel>
 
         <!-- Status Bar Section -->

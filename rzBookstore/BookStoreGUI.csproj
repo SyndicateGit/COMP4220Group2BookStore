@@ -88,6 +88,9 @@
     <Compile Include="userStngs.xaml.cs">
       <DependentUpon>userStngs.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BQDialog.xaml.cs">
+      <DependentUpon>BQDialog.xaml</DependentUpon>
+    </Compile>
     <Page Include="AdminDashboard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -129,6 +132,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="userStngs.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BQDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

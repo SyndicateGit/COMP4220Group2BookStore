@@ -426,5 +426,12 @@ namespace BookStoreGUI
             adminDashboard.Owner = this;
             adminDashboard.ShowDialog();
         }
+
+        private void bookQuotesButton_Click(Object sender, RoutedEventArgs e)
+        {
+            BQDialog bq = new BQDialog();
+            bq.Owner = this;
+            bq.ShowDialog();
+        }
     }
 }
