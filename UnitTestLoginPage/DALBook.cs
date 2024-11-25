@@ -51,5 +51,36 @@ namespace BookStoreLIB
                 conn.Close();
             }
         }
+
+        public bool DeleteBook(Book book)
+        {
+            try
+            {
+                const string query = @"DELETE FROM BookData WHERE ISBN = @ISBN AND @Title = @Title AND @Author = @Author";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@ISBN", book.ISBN);
+                    cmd.Parameters.AddWithValue("@Title", book.Title ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@Author", book.Author ?? (object)DBNull.Value);
+
+                    conn.Open();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    return rowsAffected > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+
+
     }
 }
