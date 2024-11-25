@@ -26,7 +26,7 @@ namespace BookStoreGUI
             {
                 titleTextBlock.Text = book.Title;
                 authorTextBlock.Text = book.Author;
-                priceTextBlock.Text = book.Price.ToString("C"); 
+                priceTextBlock.Text = book.Price.ToString("C") ?? "N/A";
 
                 if (book.Stock <= 0)
                 {

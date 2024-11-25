@@ -246,6 +246,7 @@ namespace BookStoreLIB
             Console.WriteLine("TestBookAvailabilityByTitle completed successfully.");
         }
 
+
         [TestMethod]
         public void GetBookQuotes_ReturnsQuotes()
         {
@@ -303,6 +304,7 @@ namespace BookStoreLIB
 
             // Assert: Expecting an exception, so no explicit assert is necessary
         }
+
 
     }
 
