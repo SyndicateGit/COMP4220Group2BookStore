@@ -56,31 +56,31 @@ namespace BookStoreLIB
                 cmd.CommandText = "SELECT ISNULL(MAX(UserID), 0) + 1 FROM UserData";
                 int newUserId = (int)cmd.ExecuteScalar();
 
-                // Insert new user
-                cmd.CommandText = "INSERT INTO UserData (UserID, UserName, Password, Type, Manager, FullName)" 
-                                    + "VALUES (@UserID, @UserName, @Password, @Type, @Manager, @FullName)";
+                cmd.CommandText = @"INSERT INTO UserData (UserID, UserName, Password, Type, Manager, FullName, IsBanned) 
+                            VALUES (@UserID, @UserName, @Password, @Type, @Manager, @FullName, @IsBanned)";
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@UserID", newUserId);
                 cmd.Parameters.AddWithValue("@UserName", userName);
                 cmd.Parameters.AddWithValue("@Password", password);
-                cmd.Parameters.AddWithValue("@Type", "RG"); 
+                cmd.Parameters.AddWithValue("@Type", "RG"); // Assuming "RG" is a default user type
                 cmd.Parameters.AddWithValue("@Manager", false);
                 cmd.Parameters.AddWithValue("@FullName", fullName);
+                cmd.Parameters.AddWithValue("@IsBanned", false); // Initialize as not banned
 
                 int rowsAffected = cmd.ExecuteNonQuery();
                 if (rowsAffected > 0)
                 {
-                    return newUserId;
+                    return newUserId; // Return the new user's ID on success
                 }
                 else
                 {
-                    return -2; 
+                    return -2; // Indicate an error if insertion failed
                 }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.ToString());
-                return -2; 
+                return -2; // Indicate an error if an exception occurred
             }
             finally
             {

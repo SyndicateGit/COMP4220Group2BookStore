@@ -10,12 +10,43 @@ namespace BookStoreGUI
     {
         private UserData userData;
         private List<Book> books;
+        private DALCategory dalCategory = new DALCategory();
+        private DALSupplier dalSupplier = new DALSupplier();
 
         public AdminDashboard()
         {
             InitializeComponent();
             userData = new UserData();
-            books = new List<Book>(); 
+            books = new List<Book>();
+            LoadCategories();
+            LoadSuppliers();
+        }
+
+        // Load categories into ComboBox
+        private void LoadCategories()
+        {
+            try
+            {
+                var categories = dalCategory.GetCategories();
+                categoryComboBox.ItemsSource = categories;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to load categories: " + ex.Message);
+            }
+        }
+
+        private void LoadSuppliers()
+        {
+            try
+            {
+                var suppliers = dalSupplier.GetSuppliers();
+                supplierComboBox.ItemsSource = suppliers;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to load suppliers: " + ex.Message);
+            }
         }
 
         // Search User
@@ -99,11 +130,47 @@ namespace BookStoreGUI
             // To be implemented
         }
 
-        // Add New Book
         private void AddBook_Click(object sender, RoutedEventArgs e)
         {
-            // To be implemented
+            // Initialize a new book and set properties from UI input
+            var newBook = new Book
+            {
+                ISBN = isbnTextBox.Text,
+                CategoryID = (int)categoryComboBox.SelectedValue,
+                Title = titleTextBox.Text,
+                Author = authorTextBox.Text,
+                Price = decimal.TryParse(priceTextBox.Text, out var price) ? price : 0,
+                SupplierId = (int?)supplierComboBox.SelectedValue,
+                Year = yearTextBox.Text,
+                Edition = editionTextBox.Text,
+                Publisher = publisherTextBox.Text,
+                Stock = int.TryParse(stockTextBox.Text, out var stock) ? stock : 0,
+                RestockDate = null
+            };
+
+            // Attempt to add the book using the business logic in Book.cs
+            try
+            {
+                bool isAdded = newBook.AddNewBook();
+                if (isAdded)
+                {
+                    MessageBox.Show("Book added successfully!");
+                }
+                else
+                {
+                    MessageBox.Show("Failed to add the book.");
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An unexpected error occurred: " + ex.Message);
+            }
         }
+
 
         // Update Book
         private void UpdateBook_Click(object sender, RoutedEventArgs e)
