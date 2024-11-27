@@ -33,5 +33,34 @@ namespace BookStoreLIB.Tests
 
             Assert.IsTrue(result, "AddBook should return true on successful insertion.");
         }
+
+        [TestMethod]
+        public void TestFindBookByISBN()
+        {
+            string testISBN = "1111111111";
+            string expectedTitle = "Test1";
+
+            var dalBook = new DALBook();
+            var result = dalBook.GetBookByISBNOrTitle(testISBN);
+
+            Assert.IsNotNull(result, "Book should be found.");
+            Assert.AreEqual(testISBN, result.ISBN, "Found book should have same ISBN");
+            Assert.AreEqual(expectedTitle, result.Title, "Found book should have expected title");
+        }
+
+        [TestMethod]
+        public void TestFindBookByTitle()
+        {
+            string partialTitle = "Test1"; 
+            string expectedISBN = "1111111111"; 
+
+            var dalBook = new DALBook();
+            var result = dalBook.GetBookByISBNOrTitle(partialTitle);
+
+            // Assert
+            Assert.IsNotNull(result, "The book should be found.");
+            Assert.AreEqual(expectedISBN, result.ISBN, "The returned book's ISBN should match the expected value.");
+            Assert.IsTrue(result.Title.Contains(partialTitle), "The returned book's Title should match the search value.");
+        }
     }
 }

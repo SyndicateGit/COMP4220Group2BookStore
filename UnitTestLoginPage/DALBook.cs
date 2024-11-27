@@ -51,5 +51,51 @@ namespace BookStoreLIB
                 conn.Close();
             }
         }
+
+        public Book GetBookByISBNOrTitle(string searchValue)
+        {
+            using (var conn = new SqlConnection(Properties.Settings.Default.MSSQLConnection))
+            {
+                try
+                {
+                    string query = @"
+                SELECT ISBN, CategoryID, Title, Author, Price, SupplierId, Year, Edition, Publisher, InStock, RestockDate
+                FROM BookData
+                WHERE ISBN = @SearchValue OR Title LIKE @SearchValuePattern";
+
+                    var cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@SearchValue", searchValue);
+                    cmd.Parameters.AddWithValue("@SearchValuePattern", $"%{searchValue}%");
+
+                    conn.Open();
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new Book
+                            {
+                                ISBN = reader["ISBN"].ToString(),
+                                CategoryID = Convert.ToInt32(reader["CategoryID"]),
+                                Title = reader["Title"].ToString(),
+                                Author = reader["Author"].ToString(),
+                                Price = reader["Price"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["Price"]),
+                                SupplierId = reader["SupplierId"] == DBNull.Value ? null : (int?)Convert.ToInt32(reader["SupplierId"]),
+                                Year = reader["Year"].ToString(),
+                                Edition = reader["Edition"].ToString(),
+                                Publisher = reader["Publisher"].ToString(),
+                                Stock = reader["InStock"] == DBNull.Value ? 0 : Convert.ToInt32(reader["InStock"]),
+                                RestockDate = reader["RestockDate"] == DBNull.Value ? null : (DateTime?)reader["RestockDate"]
+                            };
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Error in GetBookByISBNOrTitle: " + ex.Message);
+                }
+            }
+            return null; 
+        }
     }
 }
