@@ -325,6 +325,47 @@ namespace BookStoreLIB
                 // Assert: Expecting an exception, so no explicit assert is necessary
             }
 
+            [TestMethod]
+            public void TestFindUserAdmin()
+            {
+                //Tests corresponding to userID
+                int wrongInputID = 40;
+                actualUserId = 1;
+                UserData userDataProfiles = new UserData();
+                DataTable profiles = userDataProfiles.GetUsersInfo(actualUserId);
+                Assert.IsNotNull(profiles);
+                profiles = userDataProfiles.GetUsersInfo(wrongInputID);
+                //No matches
+                Assert.IsFalse(profiles.Rows.Count > 0);
+
+                //Test corresponding to a complete user name
+
+                inputName = "selse";
+                int expectedLength = 1;
+                profiles = userDataProfiles.GetUsersInfo(inputName);
+                int actualLength = profiles.Rows.Count;
+                Assert.AreEqual(expectedLength,actualLength);
+
+                //Test corresponding to invalid username
+
+                inputName = "afjdksaffdsa";
+                profiles = userDataProfiles.GetUsersInfo(inputName);
+                Assert.IsFalse(profiles.Rows.Count > 0);
+
+                //Test corresponding to prefix match
+
+                inputName = "te";
+                profiles = userDataProfiles.GetUsersInfo(inputName);
+                //At current moment there are 16
+                expectedLength = 10;
+                actualLength = profiles.Rows.Count;
+                Assert.IsTrue(actualLength > expectedLength);
+
+                
+
+
+
+            }
 
         }
 

@@ -69,8 +69,7 @@ namespace BookStoreGUI
                     MessageBox.Show("No user found with the given ID.");
                 }
             }
-            //TODO if a username
-            // To be implemented
+           
             else
             {
                 profiles = userDataProfiles.GetUsersInfo(query);
