@@ -15,13 +15,13 @@
                         <Button Content="Search" Width="100" Margin="10,0" Click="SearchUser_Click"/>
                     </StackPanel>
 
-                    <ListView x:Name="userListView" Margin="0,10" MinHeight="100" Width="750" SelectionMode="Single">
+                    <ListView x:Name="userListView" ItemsSource="{Binding}" Margin="0,10" MinHeight="100" Width="750" SelectionMode="Single" SelectionChanged="userListView_SelectionChanged">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="User ID" Width="80" DisplayMemberBinding="{Binding UserID}"/>
-                                <GridViewColumn Header="Username" Width="150" DisplayMemberBinding="{Binding LoginName}"/>
-                                <GridViewColumn Header="Full Name" Width="200" DisplayMemberBinding="{Binding FullName}"/>
-                                <GridViewColumn Header="Status" Width="100" DisplayMemberBinding="{Binding Status}"/>
+                                <GridViewColumn Header="User ID" Width="80" DisplayMemberBinding="{Binding Path = UserID}"/>
+                                <GridViewColumn Header="Username" Width="150" DisplayMemberBinding="{Binding Path =  UserName}"/>
+                                <GridViewColumn Header="Full Name" Width="200" DisplayMemberBinding="{Binding Path =  FullName}"/>
+                                <GridViewColumn Header="Email" Width="100" DisplayMemberBinding="{Binding Path =  Email}"/>
                             </GridView>
                         </ListView.View>
                     </ListView>

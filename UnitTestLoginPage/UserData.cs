@@ -4,6 +4,7 @@
  * **********************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
@@ -15,7 +16,8 @@ namespace BookStoreLIB
         public string LoginName { set; get; }
         public string Password { set; get; }
         public Boolean LoggedIn { set; get; }
-
+        public string FullName { set; get; }
+        public string Email {set; get;}
         public Boolean LogIn(string loginName, string passWord)
         {
             var dbUser = new DALUserInfo();
@@ -108,6 +110,16 @@ namespace BookStoreLIB
                 return false;
             }
             return true;
+        }
+        public System.Data.DataTable GetUsersInfo(int userID)
+        {
+            DALUserInfo userInfo = new DALUserInfo();
+            return userInfo.GetUsersInfo(userID);
+        }
+        public System.Data.DataTable GetUsersInfo(string userName)
+        {
+            DALUserInfo userInfo = new DALUserInfo();
+            return userInfo.GetUsersInfo(userName);
         }
     }
 }
