@@ -104,7 +104,7 @@ namespace BookStoreLIB
             inputPassword = "0rz1234"; // First character non letter
             String expectedReturm = "A valid password needs to have at least six characters with both letters and numbers.";
             String actualReturn = userData.authenticate(inputName, inputPassword);
-            
+
             Assert.AreEqual(expectedReturm, actualReturn);
             inputPassword = "rz123"; // Less than 6 characters
             actualReturn = userData.authenticate(inputName, inputPassword);
@@ -188,7 +188,7 @@ namespace BookStoreLIB
             string testTitle = "Microsoft Visual C# 2012: An Introduction to Object-Oriented Programming";
             BookCatalog bookCatalog = new BookCatalog();
 
-           
+
             DataSet dsBooks = bookCatalog.GetBookInfo();
             if (dsBooks == null)
             {
@@ -196,14 +196,14 @@ namespace BookStoreLIB
                 return;
             }
 
-          
+
             if (!dsBooks.Tables.Contains("Books"))
             {
                 Assert.Fail("Books table not found in the dataset.");
                 return;
             }
 
-            
+
             DataRow[] foundBooks = dsBooks.Tables["Books"].Select($"Title = '{testTitle}'");
 
             int stockCount = 0;
@@ -223,7 +223,7 @@ namespace BookStoreLIB
                     }
                 }
 
-               
+
                 Console.WriteLine($"Stock Count: {stockCount}");
                 Console.WriteLine($"Restock Date: {(restockDate.HasValue ? restockDate.Value.ToString("yyyy-MM-dd") : "No Restock Date Available")}");
             }
@@ -242,7 +242,7 @@ namespace BookStoreLIB
                 Assert.IsTrue(restockDate.HasValue, $"New stock expected on {restockDate.Value:yyyy-MM-dd}");
             }
 
-          
+
             Console.WriteLine("TestBookAvailabilityByTitle completed successfully.");
         }
         [TestMethod]
@@ -256,7 +256,7 @@ namespace BookStoreLIB
             Assert.AreEqual(expectedReturn, actualReturn);
             Boolean expectedReturnLogin = true;
             Boolean actualReturnLogin = userData.LogIn(inputName, inputPassword);
-            Assert.AreEqual (expectedReturnLogin, actualReturnLogin);
+            Assert.AreEqual(expectedReturnLogin, actualReturnLogin);
 
             string inputPasswordOld = "te1234";
             actualReturnLogin = userData.LogIn(inputName, inputPasswordOld);
@@ -265,67 +265,68 @@ namespace BookStoreLIB
             Assert.AreEqual(actualReturn, expectedReturn);
             actualReturnLogin = userData.LogIn(inputName, inputPasswordOld);
             Assert.AreEqual(expectedReturnLogin, actualReturnLogin);
-
-
-        [TestMethod]
-        public void GetBookQuotes_ReturnsQuotes()
-        {
-            BookQuotes bookQuotes = new BookQuotes();
-            DataSet quotes = bookQuotes.getBookQuotes();
-
-            // Assert
-            Assert.IsNotNull(quotes);
-            Assert.IsTrue(quotes.Tables["BookQuotes"].Rows.Count > 0, "Expected at least one quote in the dataset.");
         }
 
-        [TestMethod]
-        public void AddBookQuote_ValidData_AddsQuote()
-        {
-            BookQuotes bookQuotes = new BookQuotes();
-
-            string title = "Test Book";
-            string author = "Test Author";
-            string quote = "This is a test quote.";
-
-            // Act
-            bool result = bookQuotes.addBookQuote(title, author, quote);
-
-            // Assert
-            Assert.IsTrue(result, "Adding the quote should return true.");
-
-            // Verify that the quote is now in the dataset
-            DataSet quotes = bookQuotes.getBookQuotes();
-            bool quoteExists = false;
-            foreach (DataRow row in quotes.Tables["BookQuotes"].Rows)
+            [TestMethod]
+            public void GetBookQuotes_ReturnsQuotes()
             {
-                if (row["Book_Title"].ToString() == title &&
-                    row["Book_Author"].ToString() == author &&
-                    row["Quote"].ToString() == quote)
-                {
-                    quoteExists = true;
-                    break;
-                }
+                BookQuotes bookQuotes = new BookQuotes();
+                DataSet quotes = bookQuotes.getBookQuotes();
+
+                // Assert
+                Assert.IsNotNull(quotes);
+                Assert.IsTrue(quotes.Tables["BookQuotes"].Rows.Count > 0, "Expected at least one quote in the dataset.");
             }
-            Assert.IsTrue(quoteExists, "The new quote should be present in the dataset.");
+
+            [TestMethod]
+            public void AddBookQuote_ValidData_AddsQuote()
+            {
+                BookQuotes bookQuotes = new BookQuotes();
+
+                string title = "Test Book";
+                string author = "Test Author";
+                string quote = "This is a test quote.";
+
+                // Act
+                bool result = bookQuotes.addBookQuote(title, author, quote);
+
+                // Assert
+                Assert.IsTrue(result, "Adding the quote should return true.");
+
+                // Verify that the quote is now in the dataset
+                DataSet quotes = bookQuotes.getBookQuotes();
+                bool quoteExists = false;
+                foreach (DataRow row in quotes.Tables["BookQuotes"].Rows)
+                {
+                    if (row["Book_Title"].ToString() == title &&
+                        row["Book_Author"].ToString() == author &&
+                        row["Quote"].ToString() == quote)
+                    {
+                        quoteExists = true;
+                        break;
+                    }
+                }
+                Assert.IsTrue(quoteExists, "The new quote should be present in the dataset.");
+            }
+
+            [TestMethod]
+            [ExpectedException(typeof(ArgumentException))]
+            public void AddBookQuote_EmptyBookTitle_ThrowsArgumentException()
+            {
+                BookQuotes bookQuotes = new BookQuotes();
+                // Arrange
+                string title = ""; // Empty title
+                string author = "";
+                string quote = "";
+
+                // Act
+                var result = bookQuotes.addBookQuote(title, author, quote);
+
+                // Assert: Expecting an exception, so no explicit assert is necessary
+            }
+
+
         }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void AddBookQuote_EmptyBookTitle_ThrowsArgumentException()
-        {
-            BookQuotes bookQuotes = new BookQuotes();
-            // Arrange
-            string title = ""; // Empty title
-            string author = "";
-            string quote = "";
-
-            // Act
-            var result = bookQuotes.addBookQuote(title, author, quote);
-
-            // Assert: Expecting an exception, so no explicit assert is necessary
-        }
-
 
     }
 
-}
