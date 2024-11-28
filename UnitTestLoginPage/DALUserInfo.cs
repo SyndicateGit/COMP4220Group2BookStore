@@ -88,6 +88,28 @@ namespace BookStoreLIB
                     conn.Close();
             }
         }
+        public DataTable GetUsersInfo(int userID)
+        {
+            DataTable dt = new DataTable();
+            var conn = new SqlConnection(Properties.Settings.Default.MSSQLConnection);
+            try
+            {
+                string query = "SELECT UserID, FullName, Phone, Email, Address, Password, UserName FROM UserData WHERE UserID = @userID";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@userID", userID);
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
+            return dt;
+            
+        }
+
 
 
         internal bool BanUserIfValid(int userId, string username, string fullName)
@@ -155,6 +177,29 @@ namespace BookStoreLIB
 
 
 
+
+
+        public DataTable GetUsersInfo(string userName)
+        {
+            DataTable dt = new DataTable();
+            var conn = new SqlConnection(Properties.Settings.Default.MSSQLConnection);
+            try
+            {
+                string query = "SELECT UserID, FullName, Phone, Email, Address, Password, UserName FROM UserData WHERE username LIKE @userName + '%'";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@userName", userName);
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
+            return dt;
+            
+        }
 
         public DALUserInfo()
         {

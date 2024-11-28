@@ -35,7 +35,33 @@ namespace BookStoreLIB
                 return null;
             }
         }
-
+        public int UpdateUserPassword(string username, string password)
+        {
+            try
+            {
+                string query = "UPDATE UserData SET Password = @password WHERE UserName = @username";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@username", username);
+                    cmd.Parameters.AddWithValue("@password", password);
+                    conn.Open();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    conn.Close();
+                    return rowsAffected;
+                }
+            }
+            catch (Exception e)
+            {
+                return -1; 
+            }
+            finally
+            {
+                if(conn.State == System.Data.ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+            }
+        }
         // Method to update user profile information
         public bool UpdateUserProfile(int userID, string name, string phone, string email, string address, string password)
         {
