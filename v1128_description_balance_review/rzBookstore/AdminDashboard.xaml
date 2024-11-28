@@ -1,0 +1,150 @@
+﻿<Window x:Class="BookStoreGUI.AdminDashboard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Admin Dashboard" Height="600" Width="800" MinHeight="600" MinWidth="800">
+    <Grid>
+        <TabControl>
+            <!-- User Management Tab -->
+            <TabItem Header="User Management">
+                <StackPanel Margin="10">
+                    <TextBlock Text="Find User" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <Label Content="Enter Username or User ID:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                        <TextBox x:Name="searchUserTextBox" Width="200"/>
+                        <Button Content="Search" Width="100" Margin="10,0" Click="SearchUser_Click"/>
+                    </StackPanel>
+
+                    <ListView x:Name="userListView" Margin="0,10" MinHeight="100" Width="750" SelectionMode="Single">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="User ID" Width="80" DisplayMemberBinding="{Binding UserID}"/>
+                                <GridViewColumn Header="Username" Width="150" DisplayMemberBinding="{Binding LoginName}"/>
+                                <GridViewColumn Header="Full Name" Width="200" DisplayMemberBinding="{Binding FullName}"/>
+                                <GridViewColumn Header="Status" Width="100" DisplayMemberBinding="{Binding Status}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                    <TextBlock Text="Update User" FontSize="16" FontWeight="Bold" Margin="0,20,0,10"/>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <Label Content="User ID:" VerticalAlignment="Center" Width="70"/>
+                        <TextBox x:Name="userIDTextBox" Width="100" Margin="10,0"/>
+                        <Label Content="Username:" VerticalAlignment="Center" Width="80"/>
+                        <TextBox x:Name="usernameTextBox" Width="150" Margin="10,0"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <Label Content="Full Name:" VerticalAlignment="Center" Width="70"/>
+                        <TextBox x:Name="fullNameTextBox" Width="200" Margin="10,0"/>
+                        <Button Content="Update User" Width="100" Margin="10,0" Click="UpdateUser_Click"/>
+                        <Button Content="Ban User" Width="100" Margin="10,0" Background="Red" Click="BanUser_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+
+            <!-- Add Book Tab -->
+            <TabItem Header="Add Book">
+                <StackPanel Margin="10">
+                    <TextBlock Text="Add New Book" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <Label Content="ISBN:" VerticalAlignment="Center" Width="80"/>
+                        <TextBox x:Name="isbnTextBox" Width="200" Margin="10,0"/>
+                        <Label Content="Title:" VerticalAlignment="Center" Width="50"/>
+                        <TextBox x:Name="titleTextBox" Width="300" Margin="10,0"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <Label Content="Category:" VerticalAlignment="Center" Width="80"/>
+                        <ComboBox x:Name="categoryComboBox" Width="200" Margin="10,0" DisplayMemberPath="Name" SelectedValuePath="CategoryID"/>
+                        <Label Content="Author:" VerticalAlignment="Center" Width="50"/>
+                        <TextBox x:Name="authorTextBox" Width="200" Margin="10,0"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <Label Content="Price:" VerticalAlignment="Center" Width="80"/>
+                        <TextBox x:Name="priceTextBox" Width="100" Margin="10,0"/>
+                        <Label Content="Stock:" VerticalAlignment="Center" Width="80"/>
+                        <TextBox x:Name="stockTextBox" Width="100" Margin="10,0"/>
+                    </StackPanel>
+
+                    <!-- Additional fields -->
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <Label Content="Supplier:" VerticalAlignment="Center" Width="80"/>
+                        <ComboBox x:Name="supplierComboBox" Width="200" Margin="10,0" DisplayMemberPath="Name" SelectedValuePath="SupplierID"/>
+                        <Label Content="Year:" VerticalAlignment="Center" Width="50"/>
+                        <TextBox x:Name="yearTextBox" Width="100" Margin="10,0"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <Label Content="Edition:" VerticalAlignment="Center" Width="80"/>
+                        <TextBox x:Name="editionTextBox" Width="100" Margin="10,0"/>
+                        <Label Content="Publisher:" VerticalAlignment="Center" Width="80"/>
+                        <TextBox x:Name="publisherTextBox" Width="200" Margin="10,0"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <Button Content="Add Book" Width="100" Margin="10,0" Click="AddBook_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+
+            <!-- Book Management Tab -->
+            <TabItem Header="Book Management">
+                <StackPanel Margin="10">
+                    <TextBlock Text="Find Book" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <Label Content="Enter Book Title or ISBN:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                        <TextBox x:Name="searchBookTextBox" Width="200"/>
+                        <Button Content="Search" Width="100" Margin="10,0" Click="SearchBook_Click"/>
+                    </StackPanel>
+
+                    <ListView x:Name="bookListView" Margin="0,10" MinHeight="100" Width="750" SelectionMode="Single">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="ISBN" Width="100" DisplayMemberBinding="{Binding ISBN}"/>
+                                <GridViewColumn Header="Title" Width="250" DisplayMemberBinding="{Binding Title}"/>
+                                <GridViewColumn Header="Author" Width="150" DisplayMemberBinding="{Binding Author}"/>
+                                <GridViewColumn Header="Price" Width="80" DisplayMemberBinding="{Binding Price}"/>
+                                <GridViewColumn Header="Stock" Width="80" DisplayMemberBinding="{Binding Stock}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                    <TextBlock Text="Update Book" FontSize="16" FontWeight="Bold" Margin="0,20,0,10"/>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <Label Content="ISBN:" VerticalAlignment="Center" Width="50"/>
+                        <TextBox x:Name="updateISBNTextBox" Width="150" Margin="10,0"/>
+                        <Label Content="Title:" VerticalAlignment="Center" Width="50"/>
+                        <TextBox x:Name="updateTitleTextBox" Width="200" Margin="10,0"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <Label Content="Author:" VerticalAlignment="Center" Width="50"/>
+                        <TextBox x:Name="updateAuthorTextBox" Width="200" Margin="10,0"/>
+                        <Label Content="Price:" VerticalAlignment="Center" Width="50"/>
+                        <TextBox x:Name="updatePriceTextBox" Width="100" Margin="10,0"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <Label Content="Stock:" VerticalAlignment="Center" Width="50"/>
+                        <TextBox x:Name="updateStockTextBox" Width="100" Margin="10,0"/>
+                        <Button Content="Update Book" Width="120" Margin="10,0" Click="UpdateBook_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+
+            <!-- Statistics Tab -->
+            <TabItem Header="Statistics">
+                <StackPanel Margin="10">
+                    <TextBlock Text="Bookstore Statistics" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
+                    <!-- To be implemented -->
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
