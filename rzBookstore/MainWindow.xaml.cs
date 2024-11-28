@@ -150,25 +150,53 @@ namespace BookStoreGUI
             }
         }
 
+        private Random _random = new Random();
         private void chechoutButton_Click(object sender, RoutedEventArgs e)
+{
+    // Define the chance for the lucky customer discount
+    double discountChance = 0.10;  // Set the discount chance here (e.g., 10% chance)
+
+    if (userData != null && userData.LoggedIn)
+    {
+        if (bookOrder.OrderItemList.Count > 0)
         {
-            if (userData != null && userData.LoggedIn)
+            // Lucky Customer logic (e.g., 10% chance)
+            double randomValue = _random.NextDouble(); // Get a random number between 0 and 1
+            double discountPercentage = randomValue <= discountChance ? 10 : 0;
+
+            // Apply discount to each order item if applicable
+            if (discountPercentage > 0)
             {
-                if (bookOrder.OrderItemList.Count > 0)
+                foreach (var orderItem in bookOrder.OrderItemList)
                 {
-                    int orderId = bookOrder.PlaceOrder(currentUserId);
-                    MessageBox.Show("Your order has been placed. Your order id is " + orderId.ToString());
+                    orderItem.ApplyDiscount((decimal)discountPercentage);
                 }
-                else
-                {
-                    MessageBox.Show("Your order list is empty. Please add books before checking out.");
-                }
+
+                // Show popup informing the user they are a lucky customer
+                MessageBox.Show($"Congratulations! You've received a {discountPercentage}% discount on your order.", "Lucky Customer", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
-                MessageBox.Show("Please log in to place an order.");
+                // Show popup informing the user they are not a lucky customer
+                MessageBox.Show("No discount this time. Better luck next time!", "Lucky Customer", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+
+            // Place the order
+            int orderId = bookOrder.PlaceOrder(currentUserId);
+            MessageBox.Show("Your order has been placed. Your order id is " + orderId.ToString());
         }
+        else
+        {
+            MessageBox.Show("Your order list is empty. Please add books before checking out.");
+        }
+    }
+    else
+    {
+        MessageBox.Show("Please log in to place an order.");
+    }
+}
+
+
 
         private void discountButton_Click(object sender, RoutedEventArgs e)
         {
@@ -335,13 +363,48 @@ namespace BookStoreGUI
         }
 
         private string GetSelectedBookISBN()
-        {
+        { 
             if (ProductsDataGrid.SelectedItem != null)
             {
                 DataRowView selectedRow = (DataRowView)ProductsDataGrid.SelectedItem;
                 return selectedRow["ISBN"].ToString();
             }
             return null;
+        }
+        public void ChangeBackgroundColor(string colorName)
+        {
+            // Change the background color of the window based on the passed color name
+            switch (colorName.ToLower())
+            {
+                case "red":
+                    this.Background = new SolidColorBrush(Colors.Red);
+                    break;
+                case "blue":
+                    this.Background = new SolidColorBrush(Colors.Blue);
+                    break;
+                case "green":
+                    this.Background = new SolidColorBrush(Colors.Green);
+                    break;
+                case "yellow":
+                    this.Background = new SolidColorBrush(Colors.Yellow);
+                    break;
+                default:
+                    this.Background = new SolidColorBrush(Colors.White);  // Default to White if color is invalid
+                    break;
+            }
+        }
+        private void ChangeColorButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Example color change logic
+            // Here you can let the user choose or pick a color. I'll use a hardcoded example for now.
+            // Change the background color to a random color each time the button is clicked.
+
+            string[] colors = new string[] { "red", "blue", "green", "yellow" };
+            Random random = new Random();
+            string selectedColor = colors[random.Next(colors.Length)];
+
+            // Call the ChangeBackgroundColor method to update the background
+            ChangeBackgroundColor(selectedColor);
         }
 
 
@@ -362,6 +425,13 @@ namespace BookStoreGUI
             AdminDashboard adminDashboard = new AdminDashboard();
             adminDashboard.Owner = this;
             adminDashboard.ShowDialog();
+        }
+
+        private void bookQuotesButton_Click(Object sender, RoutedEventArgs e)
+        {
+            BQDialog bq = new BQDialog();
+            bq.Owner = this;
+            bq.ShowDialog();
         }
     }
 }

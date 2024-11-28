@@ -247,8 +247,63 @@ namespace BookStoreLIB
         }
 
 
+        [TestMethod]
+        public void GetBookQuotes_ReturnsQuotes()
+        {
+            BookQuotes bookQuotes = new BookQuotes();
+            DataSet quotes = bookQuotes.getBookQuotes();
 
+            // Assert
+            Assert.IsNotNull(quotes);
+            Assert.IsTrue(quotes.Tables["BookQuotes"].Rows.Count > 0, "Expected at least one quote in the dataset.");
+        }
 
+        [TestMethod]
+        public void AddBookQuote_ValidData_AddsQuote()
+        {
+            BookQuotes bookQuotes = new BookQuotes();
+
+            string title = "Test Book";
+            string author = "Test Author";
+            string quote = "This is a test quote.";
+
+            // Act
+            bool result = bookQuotes.addBookQuote(title, author, quote);
+
+            // Assert
+            Assert.IsTrue(result, "Adding the quote should return true.");
+
+            // Verify that the quote is now in the dataset
+            DataSet quotes = bookQuotes.getBookQuotes();
+            bool quoteExists = false;
+            foreach (DataRow row in quotes.Tables["BookQuotes"].Rows)
+            {
+                if (row["Book_Title"].ToString() == title &&
+                    row["Book_Author"].ToString() == author &&
+                    row["Quote"].ToString() == quote)
+                {
+                    quoteExists = true;
+                    break;
+                }
+            }
+            Assert.IsTrue(quoteExists, "The new quote should be present in the dataset.");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void AddBookQuote_EmptyBookTitle_ThrowsArgumentException()
+        {
+            BookQuotes bookQuotes = new BookQuotes();
+            // Arrange
+            string title = ""; // Empty title
+            string author = "";
+            string quote = "";
+
+            // Act
+            var result = bookQuotes.addBookQuote(title, author, quote);
+
+            // Assert: Expecting an exception, so no explicit assert is necessary
+        }
 
 
     }
