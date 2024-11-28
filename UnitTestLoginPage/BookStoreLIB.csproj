@@ -59,12 +59,19 @@
     <Compile Include="Book.cs" />
     <Compile Include="BookCatalog.cs" />
     <Compile Include="BookOrder.cs" />
+    <Compile Include="BookQuotes.cs" />
+    <Compile Include="DALBookQuotes.cs" />
     <Compile Include="DALBook.cs" />
     <Compile Include="DALBookCatalog.cs" />
+    <Compile Include="DALDeleteAcc.cs" />
+
     <Compile Include="DALCategory.cs" />
     <Compile Include="DALOrder.cs" />
     <Compile Include="DALPurchaseHistory.cs" />
     <Compile Include="DALSupplier.cs" />
+
+    <Compile Include="DALUpload.cs" />
+
     <Compile Include="DALUserInfo.cs" />
     <Compile Include="DiscountManager.cs" />
     <Compile Include="discountUnitTest.cs" />

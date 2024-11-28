@@ -103,18 +103,6 @@
                         <Button Content="Search" Width="100" Margin="10,0" Click="SearchBook_Click"/>
                     </StackPanel>
 
-                    <ListView x:Name="bookListView" Margin="0,10" MinHeight="100" Width="750" SelectionMode="Single">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="ISBN" Width="100" DisplayMemberBinding="{Binding ISBN}"/>
-                                <GridViewColumn Header="Title" Width="250" DisplayMemberBinding="{Binding Title}"/>
-                                <GridViewColumn Header="Author" Width="150" DisplayMemberBinding="{Binding Author}"/>
-                                <GridViewColumn Header="Price" Width="80" DisplayMemberBinding="{Binding Price}"/>
-                                <GridViewColumn Header="Stock" Width="80" DisplayMemberBinding="{Binding Stock}"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-
                     <TextBlock Text="Update Book" FontSize="16" FontWeight="Bold" Margin="0,20,0,10"/>
 
                     <StackPanel Orientation="Horizontal" Margin="0,5">

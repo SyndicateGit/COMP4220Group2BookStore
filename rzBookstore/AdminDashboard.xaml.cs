@@ -72,8 +72,38 @@ namespace BookStoreGUI
         // Search Book
         private void SearchBook_Click(object sender, RoutedEventArgs e)
         {
-            // To be implemented
+            string searchValue = searchBookTextBox.Text;
+
+            if (string.IsNullOrWhiteSpace(searchValue))
+            {
+                MessageBox.Show("Please enter an ISBN or Title to search.");
+                return;
+            }
+
+            try
+            {
+                var dalBook = new DALBook();
+                Book foundBook = dalBook.GetBookByISBNOrTitle(searchValue);
+
+                if (foundBook != null)
+                {
+                    updateISBNTextBox.Text = foundBook.ISBN;
+                    updateTitleTextBox.Text = foundBook.Title;
+                    updateAuthorTextBox.Text = foundBook.Author;
+                    updatePriceTextBox.Text = foundBook.Price.ToString("F2");
+                    updateStockTextBox.Text = foundBook.Stock.ToString();
+                }
+                else
+                {
+                    MessageBox.Show("No book found with the given ISBN or Title.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred while searching for the book: " + ex.Message);
+            }
         }
+
 
         private void AddBook_Click(object sender, RoutedEventArgs e)
         {
@@ -115,6 +145,7 @@ namespace BookStoreGUI
                 MessageBox.Show("An unexpected error occurred: " + ex.Message);
             }
         }
+
 
         private void DeleteBook_Click(object sender, RoutedEventArgs e)
         {
@@ -167,6 +198,7 @@ namespace BookStoreGUI
                 }
             }
         }
+
 
 
         // Update Book
