@@ -28,6 +28,10 @@ namespace BookStoreLIB
                 LoginName = loginName;
                 Password = passWord;
                 LoggedIn = true;
+
+                decimal balance = dbUser.GetBalance(UserID);
+                Console.WriteLine("Current Balance: " + balance);
+
                 return true;
             }
             else
@@ -121,6 +125,31 @@ namespace BookStoreLIB
         {
             DALUserInfo userInfo = new DALUserInfo();
             return userInfo.GetUsersInfo(userName);
+        }
+
+        // Method to Deduct Balance after purchase
+        public string DeductBalance(decimal purchaseAmount)
+        {
+            if (LoggedIn && UserID > 0)
+            {
+                var dbUser = new DALUserInfo();
+                decimal currentBalance = dbUser.GetBalance(UserID);
+
+                if (currentBalance >= purchaseAmount)
+                {
+                    decimal newBalance = currentBalance - purchaseAmount;
+                    dbUser.UpdateBalance(UserID, newBalance);
+                    return $"Purchase successful! New balance: {newBalance}";
+                }
+                else
+                {
+                    return "Insufficient funds!";
+                }
+            }
+            else
+            {
+                return "User not logged in.";
+            }
         }
     }
 }

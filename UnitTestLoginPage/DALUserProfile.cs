@@ -19,7 +19,7 @@ namespace BookStoreLIB
         {
             try
             {
-                string query = "SELECT FullName, Phone, Email, Address, Password FROM UserData WHERE UserID = @userID";
+                string query = "SELECT FullName, Phone, Email, Address, Password, Balance FROM UserData WHERE UserID = @userID";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@userID", userID);
 
@@ -63,11 +63,11 @@ namespace BookStoreLIB
             }
         }
         // Method to update user profile information
-        public bool UpdateUserProfile(int userID, string name, string phone, string email, string address, string password)
+        public bool UpdateUserProfile(int userID, string name, string phone, string email, string address, string password, decimal balance)
         {
             try
             {
-                string query = "UPDATE UserData SET FullName = @Name, Phone = @Phone, Email = @Email, Address = @Address, Password = @Password WHERE UserID = @UserID";
+                string query = "UPDATE UserData SET FullName = @Name, Phone = @Phone, Email = @Email, Address = @Address, Password = @Password, Balance = @Balance WHERE UserID = @UserID";
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@Name", name);
@@ -76,6 +76,7 @@ namespace BookStoreLIB
                     cmd.Parameters.AddWithValue("@Address", address);
                     cmd.Parameters.AddWithValue("@UserID", userID);
                     cmd.Parameters.AddWithValue("@Password", password);
+                    cmd.Parameters.AddWithValue("@Balance", balance);
 
                     conn.Open();
                     int rowsAffected = cmd.ExecuteNonQuery();
@@ -156,5 +157,35 @@ namespace BookStoreLIB
             }
             return isbnList;
         }
+
+        // Method to get the balance for a specific user
+        public decimal GetUserBalance(int userID)
+        {
+            try
+            {
+                string query = "SELECT Balance FROM UserData WHERE UserID = @userID";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@userID", userID);
+
+                conn.Open();
+                object result = cmd.ExecuteScalar();
+                conn.Close();
+
+                return result != DBNull.Value ? Convert.ToDecimal(result) : 0;
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions (optional logging)
+                return 0; // Return 0 if there's an error or no data is found
+            }
+            finally
+            {
+                if (conn.State == System.Data.ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+            }
+        }
+
     }
 }

@@ -21,10 +21,10 @@ namespace BookStoreLIB
         }
 
         // Method to update user profile information
-        public bool UpdateUserProfile(int userID, string name, string phone, string email, string address, string password)
+        public bool UpdateUserProfile(int userID, string name, string phone, string email, string address, string password, decimal balance)
         {
             DALUserProfile dalUserProfile = new DALUserProfile();
-            return dalUserProfile.UpdateUserProfile(userID, name, phone, email, address, password);
+            return dalUserProfile.UpdateUserProfile(userID, name, phone, email, address, password, balance);
         }
         public int UpdateUserPassword(string username, string password)
         {
@@ -54,6 +54,13 @@ namespace BookStoreLIB
         public List<string> GetAllWatchlistBooks()
         {
             return Watchlist;
+        }
+
+        // Method to get the user's balance
+        public decimal GetUserBalance(int userID)
+        {
+            DALUserProfile dalUserProfile = new DALUserProfile();
+            return dalUserProfile.GetUserBalance(userID);
         }
     }
 }

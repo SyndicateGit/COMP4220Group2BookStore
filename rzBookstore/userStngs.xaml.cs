@@ -55,6 +55,10 @@ namespace BookStoreGUI
 
         private void balanceButton_Click(object sender, RoutedEventArgs e)
         {
+            userProfile profile = new userProfile();
+            decimal userBalance = profile.GetUserBalance(_userId);
+
+            MessageBox.Show($"Your current balance is: {userBalance:C}", "Balance", MessageBoxButton.OK, MessageBoxImage.Information);
 
         }
 

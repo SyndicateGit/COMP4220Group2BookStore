@@ -131,6 +131,65 @@ namespace BookStoreLIB
             return dt;
             
         }
+
+        // Method to get balance for a user
+        public decimal GetBalance(int userID)
+        {
+            var conn = new SqlConnection(Properties.Settings.Default.MSSQLConnection);
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = "SELECT Balance FROM UserData WHERE UserID = @UserID";
+                cmd.Parameters.AddWithValue("@UserID", userID);
+                conn.Open();
+                object result = cmd.ExecuteScalar();
+                if (result != null && result != DBNull.Value)
+                {
+                    return Convert.ToDecimal(result);
+                }
+                else
+                {
+                    return 0.00M;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+                return 0.00M;
+            }
+            finally
+            {
+                if (conn.State == ConnectionState.Open)
+                    conn.Close();
+            }
+        }
+
+        // Method to update the balance for a user
+        public void UpdateBalance(int userID, decimal newBalance)
+        {
+            var conn = new SqlConnection(Properties.Settings.Default.MSSQLConnection);
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = "UPDATE UserData SET Balance = @Balance WHERE UserID = @UserID";
+                cmd.Parameters.AddWithValue("@Balance", newBalance);
+                cmd.Parameters.AddWithValue("@UserID", userID);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+            }
+            finally
+            {
+                if (conn.State == ConnectionState.Open)
+                    conn.Close();
+            }
+        }
+
         public DALUserInfo()
         {
 
