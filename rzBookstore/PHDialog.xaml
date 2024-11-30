@@ -16,7 +16,7 @@
                 <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="200"/>
                 <DataGridTextColumn Header="Order Date" Binding="{Binding OrderDate}" Width="120"/>
                 <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="80"/>
-                <DataGridTextColumn Header="Total Price" Binding="{Binding TotalPrice}" Width="100"/>
+                <DataGridTextColumn Header="Total Price" Binding="{Binding SubTotal}" Width="100"/>
             </DataGrid.Columns>
         </DataGrid>
 
