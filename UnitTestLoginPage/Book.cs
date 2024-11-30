@@ -50,5 +50,32 @@ namespace BookStoreLIB
             return dalBook.AddBook(this);
         }
 
+        public bool UpdateBookDetails()
+        {
+            // Validate data for updating an existing book
+            ValidateUpdateDetails();
+            return dalBook.UpdateBook(this);
+        }
+
+        private void ValidateUpdateDetails()
+        {
+            if (string.IsNullOrEmpty(ISBN) || ISBN.Length != 10)
+            {
+                throw new ArgumentException("ISBN must be 10 characters.");
+            }
+            if (string.IsNullOrEmpty(Title))
+            {
+                throw new ArgumentException("Title cannot be empty.");
+            }
+            if (Price <= 0)
+            {
+                throw new ArgumentException("Price must be greater than 0.");
+            }
+            if (Stock < 0)
+            {
+                throw new ArgumentException("Stock cannot be negative.");
+            }
+        }
+
     }
 }

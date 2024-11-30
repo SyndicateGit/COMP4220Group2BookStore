@@ -32,6 +32,14 @@ namespace BookStoreLIB
             return dALUserProfile.UpdateUserPassword(username, password);
         }
 
+        public int UpdateUserBalance(string username, decimal balance)
+        {
+            DALUserProfile dalUserProfile = new DALUserProfile();
+            return dalUserProfile.UpdateUserBalance(username, balance);
+        }
+
+
+
         // Method to add a book to the user's watchlist
         public void AddBookToWatchlist(string isbn)
         {
