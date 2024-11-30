@@ -7,13 +7,21 @@
         mc:Ignorable="d"
         Title="Window1" Height="450" Width="800">
     <Grid>
-        <!-- DataGrid for Book Quotes -->
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+
         <DataGrid x:Name="bookquotedatagrid" 
               AutoGenerateColumns="False" 
               HorizontalAlignment="Stretch" 
               VerticalAlignment="Stretch"
-              Margin="10,10,10,50">
-            <!-- Adjust margin for button placement -->
+              Margin="10"
+              Grid.Row="0">
+     
+
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Quote ID" Binding="{Binding Quote_id}" Width="100"/>
                 <DataGridTextColumn Header="Book Title" Binding="{Binding Book_Title}" Width="150"/>
@@ -22,7 +30,7 @@
             </DataGrid.Columns>
         </DataGrid>
 
-    <StackPanel Margin="20" Height="160">
+    <StackPanel Orientation="Vertical" Margin="10" Grid.Row="1">
 
             <Label Content="Book:" />
             <TextBox x:Name="bookTextBox" Width="300" />
@@ -36,9 +44,9 @@
             <Button x:Name="updateButton" Content="Update" Click="UpdateButton_Click" Width="100" Margin="5" />
         </StackPanel>
 
-        <!-- Exit Button in the Bottom-Right Corner -->
+
     <Button x:Name="exitButton" Click="exitButton_Click" IsCancel="True"
             Content="Exit" MinWidth="80" Margin="10"
-            HorizontalAlignment="Right" VerticalAlignment="Bottom" />
+            HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1"/>
     </Grid>
 </Window>
