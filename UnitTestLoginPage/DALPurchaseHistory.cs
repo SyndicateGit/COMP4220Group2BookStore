@@ -25,7 +25,7 @@ namespace BookStoreLIB
             try
             {
                 string strSQL = @"
-            SELECT o.OrderID, b.Author, b.Title, o.OrderDate, oi.Quantity, (b.Price * oi.Quantity) AS TotalPrice
+            SELECT o.OrderID, b.Author, b.Title, o.OrderDate, oi.Quantity, SubTotal
             FROM Orders o
             INNER JOIN OrderItem oi ON o.OrderID = oi.OrderID
             INNER JOIN bookData b ON oi.ISBN = b.ISBN
