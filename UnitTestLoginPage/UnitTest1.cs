@@ -17,7 +17,7 @@ namespace BookStoreLIB
         public void TestPurchaseHistory()
         {
 
-            int testUserId = 8;
+            int testUserId = 1;
             PurchaseHistory purchaseHistory = new PurchaseHistory();
 
             DataSet result = purchaseHistory.GetPurchaseHistory(testUserId);
@@ -28,18 +28,18 @@ namespace BookStoreLIB
 
 
             DataRow firstRow = result.Tables["PurchaseHistory"].Rows[0];
-            Assert.AreEqual(15, firstRow["OrderID"]);
-            Assert.AreEqual("Jon Skeet", firstRow["Author"]);
-            Assert.AreEqual("NULLC# in Depth", firstRow["Title"]);
+            Assert.AreEqual(16, firstRow["OrderID"]);
+            Assert.AreEqual("Ian Palmer", firstRow["Author"]);
+            Assert.AreEqual("Essential Java 3D Fast : Developing 3D Graphics Applications in Java", firstRow["Title"]);
 
-            DateTime expectedDate = DateTime.Parse("10/17/2024 5:23:40 PM");
+            DateTime expectedDate = DateTime.Parse("10/29/2024 2:42:45 PM");
             DateTime actualDate = Convert.ToDateTime(firstRow["OrderDate"]);
 
             // Allow small differences if they exist (e.g., different DateTime.Kind or milliseconds)
             Assert.IsTrue(Math.Abs((expectedDate - actualDate).TotalSeconds) < 1, "OrderDate should be the same up to seconds precision.");
 
-            Assert.AreEqual(2, firstRow["Quantity"]);
-            Assert.AreEqual(82.44, Convert.ToDouble(firstRow["TotalPrice"]), 0.01);
+            Assert.AreEqual(1, firstRow["Quantity"]);
+            Assert.AreEqual(89.99, Convert.ToDouble(firstRow["TotalPrice"]), 0.01);
         }
 
 
