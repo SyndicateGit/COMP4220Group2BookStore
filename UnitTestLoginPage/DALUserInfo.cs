@@ -94,7 +94,7 @@ namespace BookStoreLIB
             var conn = new SqlConnection(Properties.Settings.Default.MSSQLConnection);
             try
             {
-                string query = "SELECT UserID, FullName, Phone, Email, Address, Password, UserName FROM UserData WHERE UserID = @userID";
+                string query = "SELECT UserID, FullName, Phone, Email, Address, Password, Balance, UserName FROM UserData WHERE UserID = @userID";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@userID", userID);
 
@@ -116,7 +116,7 @@ namespace BookStoreLIB
             var conn = new SqlConnection(Properties.Settings.Default.MSSQLConnection);
             try
             {
-                string query = "SELECT UserID, FullName, Phone, Email, Address, Password, UserName FROM UserData WHERE username LIKE @userName + '%'";
+                string query = "SELECT UserID, FullName, Phone, Email, Address, Password,Balance, UserName FROM UserData WHERE username LIKE @userName + '%'";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@userName", userName);
 
