@@ -34,6 +34,8 @@ namespace BookStoreGUI
                 emailTextBox.Text = userDataRow["Email"].ToString();
                 addressTextBox.Text = userDataRow["Address"].ToString();
                 passwordTextBox.Text = userDataRow["Password"].ToString();
+                decimal balance = (decimal)userDataRow["Balance"];
+                balanceTextBox.Text = balance.ToString("0.00");
             }
             else
             {
@@ -103,12 +105,17 @@ namespace BookStoreGUI
             string updatedEmail = emailTextBox.Text;
             string updatedAddress = addressTextBox.Text;
             string updatedPassword = passwordTextBox.Text;
-
+            decimal balance = 0;
+            if (!decimal.TryParse(balanceTextBox.Text, out balance))
+            {
+                MessageBox.Show("Please enter a valid balance amount.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             // Create an instance of the userProfile class
             userProfile profile = new userProfile();
 
             // Update the user profile in the database
-            bool isUpdated = profile.UpdateUserProfile(_userID, updatedName, updatedPhone, updatedEmail, updatedAddress, updatedPassword);
+            bool isUpdated = profile.UpdateUserProfile(_userID, updatedName, updatedPhone, updatedEmail, updatedAddress, updatedPassword, balance);
 
             // Check if the update was successful
               if (isUpdated)
