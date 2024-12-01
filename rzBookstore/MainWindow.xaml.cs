@@ -433,5 +433,28 @@ namespace BookStoreGUI
             bq.Owner = this;
             bq.ShowDialog();
         }
+
+        private void reviewButton_Click(Object sender, RoutedEventArgs e)
+        {
+            if (userData != null && userData.LoggedIn)
+            {
+                string selectedISBN = GetSelectedBookISBN();
+
+                if (selectedISBN != null)
+                {
+                    ReviewsDialog reviewsDialog = new ReviewsDialog(selectedISBN, currentUserId);
+                    reviewsDialog.Owner = this;
+                    reviewsDialog.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Please select a book.", "No Book Selected");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please log in first.");
+            }
+        }
     }
 }

@@ -67,6 +67,7 @@
     <Compile Include="DALCategory.cs" />
     <Compile Include="DALOrder.cs" />
     <Compile Include="DALPurchaseHistory.cs" />
+    <Compile Include="DALReview.cs" />
     <Compile Include="DALSupplier.cs" />
     <Compile Include="DALUpload.cs" />
     <Compile Include="DALUserInfo.cs" />

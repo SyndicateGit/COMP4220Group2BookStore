@@ -14,18 +14,18 @@ namespace BookStoreLIB
         int actualUserId;
 
         [TestMethod]
+
         public void TestPurchaseHistory()
         {
 
-            int testUserId = 1;
-            PurchaseHistory purchaseHistory = new PurchaseHistory();
+     int testUserId = 1;
+     PurchaseHistory purchaseHistory = new PurchaseHistory();
 
-            DataSet result = purchaseHistory.GetPurchaseHistory(testUserId);
+     DataSet result = purchaseHistory.GetPurchaseHistory(testUserId);
 
 
-            Assert.IsNotNull(result, "Purchase history should not be null");
-            Assert.IsTrue(result.Tables["PurchaseHistory"].Rows.Count > 0, "Purchase history should return at least one row");
-
+     Assert.IsNotNull(result, "Purchase history should not be null");
+     Assert.IsTrue(result.Tables["PurchaseHistory"].Rows.Count > 0, "Purchase history should return at least one row");
 
             DataRow firstRow = result.Tables["PurchaseHistory"].Rows[95];
             Assert.AreEqual(96, firstRow["OrderID"]);
@@ -34,14 +34,13 @@ namespace BookStoreLIB
 
             DateTime expectedDate = DateTime.Parse("11/30/2024 5:27:06 PM");
             DateTime actualDate = Convert.ToDateTime(firstRow["OrderDate"]);
-
-            // Allow small differences if they exist (e.g., different DateTime.Kind or milliseconds)
-            Assert.IsTrue(Math.Abs((expectedDate - actualDate).TotalSeconds) < 1, "OrderDate should be the same up to seconds precision.");
+    
+               // Allow small differences if they exist (e.g., different DateTime.Kind or milliseconds)
+     Assert.IsTrue(Math.Abs((expectedDate - actualDate).TotalSeconds) < 1, "OrderDate should be the same up to seconds precision.");
 
             Assert.AreEqual(1, firstRow["Quantity"]);
             Assert.AreEqual(28.64, Convert.ToDouble(firstRow["SubTotal"]), 0.01);
         }
-
 
         [TestMethod]
         public void TestCorrectLogin()

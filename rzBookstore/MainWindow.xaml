@@ -102,6 +102,13 @@
                             Margin="10,20,55,0"/>
         </StackPanel>
 
+        <StackPanel Orientation="Horizontal" Margin="123,538,162,53">
+            <Button x:Name="descriptionButton" Content="Book Description"
+    Height="25" Width="120" Click="descriptionButton_Click" Margin="0,0,10,0"/>
+            <Button x:Name="reviewButton" Content="Review"
+Height="25" Width="120" Click="reviewButton_Click" Margin="0"/>
+        </StackPanel>
+
         <!-- Status Bar Section -->
         <StatusBar VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
             <TextBlock x:Name="statusTextBlock">
