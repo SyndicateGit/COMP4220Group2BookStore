@@ -130,5 +130,43 @@ namespace BookStoreLIB
             return null; 
         }
 
+
+        public bool UpdateBook(Book book)
+        {
+            try
+            {
+                const string query = @"
+                UPDATE BookData
+                SET Title = @Title,
+                    Author = @Author,
+                    Price = @Price,
+                    InStock = @InStock
+                WHERE ISBN = @ISBN";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@ISBN", book.ISBN);
+                    cmd.Parameters.AddWithValue("@Title", book.Title ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@Author", book.Author ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@Price", book.Price != 0 ? (object)book.Price : DBNull.Value);
+                    cmd.Parameters.AddWithValue("@InStock", book.Stock);
+
+                    // Open connection, execute command, and return success status
+                    conn.Open();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    return rowsAffected > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error updating book: {ex.Message}");
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
     }
 }
