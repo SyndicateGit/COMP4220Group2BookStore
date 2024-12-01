@@ -70,6 +70,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddReviewDialog.xaml.cs">
+      <DependentUpon>AddReviewDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AdminDashboard.xaml.cs">
       <DependentUpon>AdminDashboard.xaml</DependentUpon>
     </Compile>
@@ -82,6 +85,9 @@
     <Compile Include="ProfileDialog.xaml.cs">
       <DependentUpon>ProfileDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ReviewsDialog.xaml.cs">
+      <DependentUpon>ReviewsDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SignupDialog.xaml.cs">
       <DependentUpon>SignupDialog.xaml</DependentUpon>
     </Compile>
@@ -91,6 +97,9 @@
     <Compile Include="BQDialog.xaml.cs">
       <DependentUpon>BQDialog.xaml</DependentUpon>
     </Compile>
+    <Page Include="AddReviewDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AdminDashboard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -126,6 +135,9 @@
     <Page Include="ProfileDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ReviewsDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SignupDialog.xaml">
       <SubType>Designer</SubType>
