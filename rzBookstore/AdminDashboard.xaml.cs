@@ -148,9 +148,39 @@ namespace BookStoreGUI
 
 
         // Ban User
-        private void BanUser_Click(object sender, RoutedEventArgs e)
+        public void BanUser_Click(object sender, RoutedEventArgs e)
         {
-            // To be implemented
+            if (string.IsNullOrWhiteSpace(userIDTextBox.Text) || string.IsNullOrWhiteSpace(usernameTextBox.Text) || string.IsNullOrWhiteSpace(fullNameTextBox.Text))
+            {
+                MessageBox.Show("Please fill out all fields (User ID, Username, and Full Name) before banning the user.",
+                                "Missing Information", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+
+            if (!int.TryParse(userIDTextBox.Text, out int userId))
+            {
+                MessageBox.Show("Invalid User ID. Please enter a valid number.",
+                                "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            string username = usernameTextBox.Text.Trim();
+            string fullName = fullNameTextBox.Text.Trim();
+
+            var userService = new UserService();
+            bool result = userService.BanUser(userId, username, fullName);
+
+            if (result)
+            {
+                MessageBox.Show($"User '{username}' (ID: {userId}) has been successfully banned.",
+                                "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("Failed to ban the user. Please ensure the provided information is correct and try again.",
+                                "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         // Search Book
@@ -229,6 +259,60 @@ namespace BookStoreGUI
                 MessageBox.Show("An unexpected error occurred: " + ex.Message);
             }
         }
+
+
+        private void DeleteBook_Click(object sender, RoutedEventArgs e)
+        {
+           
+            string isbn = isbnTextBox.Text;
+
+            var bookToDelete = new Book
+            {
+                ISBN = isbnTextBox.Text,
+                Title = titleTextBox.Text,
+                Author = authorTextBox.Text
+            };
+
+            // Validate input
+            if (string.IsNullOrWhiteSpace(bookToDelete.ISBN) || string.IsNullOrWhiteSpace(bookToDelete.Title) || string.IsNullOrWhiteSpace(bookToDelete.Author))
+            {
+                MessageBox.Show("Please fill out ISBN, Title, and Author fields to delete the book.");
+                return;
+            }
+
+            // Confirm deletion
+            MessageBoxResult result = MessageBox.Show(
+                $"Are you sure you want to delete the book:\n\n" +
+                $"Title: {bookToDelete.Title}\nAuthor: {bookToDelete.Author}\nISBN: {bookToDelete.ISBN}?",
+                "Confirm Deletion",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning
+            );
+
+
+            if (result == MessageBoxResult.Yes)
+            {
+                // Attempt to delete the book using DALBook
+                DALBook dalBook = new DALBook();
+                try
+                {
+                    bool isDeleted = dalBook.DeleteBook(bookToDelete);
+                    if (isDeleted)
+                    {
+                        MessageBox.Show("Book deleted successfully!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to delete the book. Please check the information provided and try again.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("An unexpected error occurred: " + ex.Message);
+                }
+            }
+        }
+
 
 
         // Update Book

@@ -64,12 +64,15 @@
     <Compile Include="DALBook.cs" />
     <Compile Include="DALBookCatalog.cs" />
     <Compile Include="DALDeleteAcc.cs" />
+
     <Compile Include="DALCategory.cs" />
     <Compile Include="DALOrder.cs" />
     <Compile Include="DALPurchaseHistory.cs" />
     <Compile Include="DALReview.cs" />
     <Compile Include="DALSupplier.cs" />
+
     <Compile Include="DALUpload.cs" />
+
     <Compile Include="DALUserInfo.cs" />
     <Compile Include="DiscountManager.cs" />
     <Compile Include="discountUnitTest.cs" />
@@ -86,6 +89,7 @@
     <Compile Include="UnitTestBooks.cs" />
     <Compile Include="UserData.cs" />
     <Compile Include="userProfile.cs" />
+    <Compile Include="UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -17,17 +17,27 @@ namespace BookStoreLIB
         public string LoginName { set; get; }
         public string Password { set; get; }
         public Boolean LoggedIn { set; get; }
+
         public string FullName { set; get; }
         public string Email {set; get;}
         public string Balance { set; get; }
 
 
         public Boolean LogIn(string loginName, string passWord)
+
         {
-            var dbUser = new DALUserInfo();
-            UserID = dbUser.LogIn(loginName, passWord);
+            var dbUser = new DALUserInfo();            
+            UserID = dbUser.LogIn(loginName, passWord);  
             if (UserID > 0)
             {
+
+                if (dbUser.IsUserBanned(UserID))
+                {
+                    MessageBox.Show("Your account has been banned.",
+                                    "Login Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
+                }
+
                 LoginName = loginName;
                 Password = passWord;
                 LoggedIn = true;
