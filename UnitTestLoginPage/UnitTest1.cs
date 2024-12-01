@@ -244,6 +244,7 @@ namespace BookStoreLIB
 
             Console.WriteLine("TestBookAvailabilityByTitle completed successfully.");
         }
+
         [TestMethod]
         public void TestUpdateUserPassword()
         {
@@ -367,6 +368,7 @@ namespace BookStoreLIB
             }
 
         }
+
 
     }
 

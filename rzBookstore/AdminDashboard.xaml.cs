@@ -231,6 +231,60 @@ namespace BookStoreGUI
         }
 
 
+        private void DeleteBook_Click(object sender, RoutedEventArgs e)
+        {
+           
+            string isbn = isbnTextBox.Text;
+
+            var bookToDelete = new Book
+            {
+                ISBN = isbnTextBox.Text,
+                Title = titleTextBox.Text,
+                Author = authorTextBox.Text
+            };
+
+            // Validate input
+            if (string.IsNullOrWhiteSpace(bookToDelete.ISBN) || string.IsNullOrWhiteSpace(bookToDelete.Title) || string.IsNullOrWhiteSpace(bookToDelete.Author))
+            {
+                MessageBox.Show("Please fill out ISBN, Title, and Author fields to delete the book.");
+                return;
+            }
+
+            // Confirm deletion
+            MessageBoxResult result = MessageBox.Show(
+                $"Are you sure you want to delete the book:\n\n" +
+                $"Title: {bookToDelete.Title}\nAuthor: {bookToDelete.Author}\nISBN: {bookToDelete.ISBN}?",
+                "Confirm Deletion",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning
+            );
+
+
+            if (result == MessageBoxResult.Yes)
+            {
+                // Attempt to delete the book using DALBook
+                DALBook dalBook = new DALBook();
+                try
+                {
+                    bool isDeleted = dalBook.DeleteBook(bookToDelete);
+                    if (isDeleted)
+                    {
+                        MessageBox.Show("Book deleted successfully!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to delete the book. Please check the information provided and try again.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("An unexpected error occurred: " + ex.Message);
+                }
+            }
+        }
+
+
+
         // Update Book
         private void UpdateBook_Click(object sender, RoutedEventArgs e)
         {
