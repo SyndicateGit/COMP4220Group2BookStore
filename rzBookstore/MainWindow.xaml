@@ -80,7 +80,7 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
 
                 <Button x:Name="checkoutOrderButton" MinHeight="25" MinWidth="80"
-                        Content="Proceed to Checkout" Click="chechoutButton_Click" Width="121" Margin="10,0"/>
+                        Content="Proceed to Checkout" Click="checkoutButton_Click" Width="121" Margin="10,0"/>
                 <Button x:Name="discountButton" MinHeight="25" MinWidth="80"
                         Content="Apply Discount" Click="discountButton_Click" Width="121" Margin="10,0,0,0"/>
                 <Button x:Name="addBookButton" MinHeight="25" MinWidth="110" Margin="20,0,0,0"
