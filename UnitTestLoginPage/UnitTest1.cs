@@ -27,19 +27,19 @@ namespace BookStoreLIB
      Assert.IsNotNull(result, "Purchase history should not be null");
      Assert.IsTrue(result.Tables["PurchaseHistory"].Rows.Count > 0, "Purchase history should return at least one row");
 
-            DataRow firstRow = result.Tables["PurchaseHistory"].Rows[95];
-            Assert.AreEqual(96, firstRow["OrderID"]);
-            Assert.AreEqual("Roy Osherove", firstRow["Author"]);
-            Assert.AreEqual("The Art of Unit Testing: with examples in C#", firstRow["Title"]);
+            DataRow firstRow = result.Tables["PurchaseHistory"].Rows[0];
+            Assert.AreEqual(16, firstRow["OrderID"]);
+            Assert.AreEqual("Ian Palmer", firstRow["Author"]);
+            Assert.AreEqual("Essential Java 3D Fast : Developing 3D Graphics Applications in Java", firstRow["Title"]);
 
-            DateTime expectedDate = DateTime.Parse("11/30/2024 5:27:06 PM");
+            DateTime expectedDate = DateTime.Parse("10/29/2024 2:42:45 PM");
             DateTime actualDate = Convert.ToDateTime(firstRow["OrderDate"]);
     
                // Allow small differences if they exist (e.g., different DateTime.Kind or milliseconds)
      Assert.IsTrue(Math.Abs((expectedDate - actualDate).TotalSeconds) < 1, "OrderDate should be the same up to seconds precision.");
 
             Assert.AreEqual(1, firstRow["Quantity"]);
-            Assert.AreEqual(28.64, Convert.ToDouble(firstRow["SubTotal"]), 0.01);
+            Assert.AreEqual(89.99, Convert.ToDouble(firstRow["SubTotal"]), 0.01);
         }
 
         [TestMethod]
