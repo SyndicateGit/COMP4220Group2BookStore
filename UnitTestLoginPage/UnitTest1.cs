@@ -14,8 +14,9 @@ namespace BookStoreLIB
         int actualUserId;
 
         [TestMethod]
-         public void TestPurchaseHistory()
- {
+
+        public void TestPurchaseHistory()
+        {
 
      int testUserId = 1;
      PurchaseHistory purchaseHistory = new PurchaseHistory();
@@ -26,21 +27,20 @@ namespace BookStoreLIB
      Assert.IsNotNull(result, "Purchase history should not be null");
      Assert.IsTrue(result.Tables["PurchaseHistory"].Rows.Count > 0, "Purchase history should return at least one row");
 
+            DataRow firstRow = result.Tables["PurchaseHistory"].Rows[0];
+            Assert.AreEqual(16, firstRow["OrderID"]);
+            Assert.AreEqual("Ian Palmer", firstRow["Author"]);
+            Assert.AreEqual("Essential Java 3D Fast : Developing 3D Graphics Applications in Java", firstRow["Title"]);
 
-     DataRow firstRow = result.Tables["PurchaseHistory"].Rows[0];
-     Assert.AreEqual(16, firstRow["OrderID"]);
-     Assert.AreEqual("Ian Palmer", firstRow["Author"]);
-     Assert.AreEqual("Essential Java 3D Fast : Developing 3D Graphics Applications in Java", firstRow["Title"]);
-
-     DateTime expectedDate = DateTime.Parse("10/29/2024 2:42:45 PM");
-     DateTime actualDate = Convert.ToDateTime(firstRow["OrderDate"]);
-
-     // Allow small differences if they exist (e.g., different DateTime.Kind or milliseconds)
+            DateTime expectedDate = DateTime.Parse("10/29/2024 2:42:45 PM");
+            DateTime actualDate = Convert.ToDateTime(firstRow["OrderDate"]);
+    
+               // Allow small differences if they exist (e.g., different DateTime.Kind or milliseconds)
      Assert.IsTrue(Math.Abs((expectedDate - actualDate).TotalSeconds) < 1, "OrderDate should be the same up to seconds precision.");
 
-     Assert.AreEqual(1, firstRow["Quantity"]);
-     Assert.AreEqual(89.99, Convert.ToDouble(firstRow["TotalPrice"]), 0.01);
- }
+            Assert.AreEqual(1, firstRow["Quantity"]);
+            Assert.AreEqual(89.99, Convert.ToDouble(firstRow["SubTotal"]), 0.01);
+        }
 
         [TestMethod]
         public void TestCorrectLogin()

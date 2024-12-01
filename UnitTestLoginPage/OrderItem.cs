@@ -80,7 +80,7 @@ namespace BookStoreLIB
 
         public override string ToString()
         {
-            return $"<OrderItem ISBN='{BookID}' Quantity='{Quantity}' />";
+            return $"<OrderItem ISBN='{BookID}' Quantity='{Quantity}' SubTotal='{SubTotal}' />";
         }
     }
 }
