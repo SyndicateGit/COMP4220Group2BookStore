@@ -151,60 +151,50 @@ namespace BookStoreGUI
         }
 
         private Random _random = new Random();
-        private void checkoutButton_Click(object sender, RoutedEventArgs e)
+        private void chechoutButton_Click(object sender, RoutedEventArgs e)
+{
+    // Define the chance for the lucky customer discount
+    double discountChance = 0.10;  // Set the discount chance here (e.g., 10% chance)
+
+    if (userData != null && userData.LoggedIn)
+    {
+        if (bookOrder.OrderItemList.Count > 0)
         {
-            // Define the chance for the lucky customer discount
-            double discountChance = 0.10;  // Set the discount chance here (e.g., 10% chance)
+            // Lucky Customer logic (e.g., 10% chance)
+            double randomValue = _random.NextDouble(); // Get a random number between 0 and 1
+            double discountPercentage = randomValue <= discountChance ? 10 : 0;
 
-            if (userData != null && userData.LoggedIn)
+            // Apply discount to each order item if applicable
+            if (discountPercentage > 0)
             {
-                if (bookOrder.OrderItemList.Count > 0)
+                foreach (var orderItem in bookOrder.OrderItemList)
                 {
-                    // Lucky Customer logic (e.g., 10% chance)
-                    double randomValue = _random.NextDouble(); // Get a random number between 0 and 1
-                    double discountPercentage = randomValue <= discountChance ? 10 : 0;
-
-                    // Apply discount to each order item if applicable
-                    if (discountPercentage > 0)
-                    {
-                        foreach (var orderItem in bookOrder.OrderItemList)
-                        {
-                            orderItem.ApplyDiscount((decimal)discountPercentage);
-                        }
-
-                        // Show popup informing the user they are a lucky customer
-                        MessageBox.Show($"Congratulations! You've received a {discountPercentage}% discount on your order.", "Lucky Customer", MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
-                    else
-                    {
-                        // Show popup informing the user they are not a lucky customer
-                        MessageBox.Show("No discount this time. Better luck next time!", "Lucky Customer", MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
-
-                    // Calculate the total amount after any discounts
-                    decimal totalAmount = bookOrder.OrderItemList.Sum(item => (decimal)item.SubTotal);
-
-                    // Deduct balance after purchase
-                    string deductionResult = userData.DeductBalance(totalAmount);
-                    MessageBox.Show(deductionResult);
-
-                    // Place the order if deduction was successful
-                    if (!deductionResult.StartsWith("Insufficient"))
-                    {
-                        int orderId = bookOrder.PlaceOrder(currentUserId);
-                        MessageBox.Show("Your order has been placed. Your order id is " + orderId.ToString());
-                    }
+                    orderItem.ApplyDiscount((decimal)discountPercentage);
                 }
-                else
-                {
-                    MessageBox.Show("Your order list is empty. Please add books before checking out.");
-                }
+
+                // Show popup informing the user they are a lucky customer
+                MessageBox.Show($"Congratulations! You've received a {discountPercentage}% discount on your order.", "Lucky Customer", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
-                MessageBox.Show("Please log in to place an order.");
+                // Show popup informing the user they are not a lucky customer
+                MessageBox.Show("No discount this time. Better luck next time!", "Lucky Customer", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+
+            // Place the order
+            int orderId = bookOrder.PlaceOrder(currentUserId);
+            MessageBox.Show("Your order has been placed. Your order id is " + orderId.ToString());
         }
+        else
+        {
+            MessageBox.Show("Your order list is empty. Please add books before checking out.");
+        }
+    }
+    else
+    {
+        MessageBox.Show("Please log in to place an order.");
+    }
+}
 
 
 
