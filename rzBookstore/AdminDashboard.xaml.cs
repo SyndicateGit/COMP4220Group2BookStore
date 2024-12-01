@@ -97,20 +97,26 @@ namespace BookStoreGUI
             }
         }
         // Update User
-        private void UpdateUserPass_Click(object sender, RoutedEventArgs e)
+        private void UpdateUser_Click(object sender, RoutedEventArgs e)
         {
+            if (!int.TryParse(userIDTextBox.Text, out int userId))
+            {
+                MessageBox.Show("Invalid User ID. Please enter a valid number.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
             string updatedPassword = userPassTextBox.Text;
             string username = usernameTextBox.Text;
+            string fullName = fullNameTextBox.Text;
             userProfile profile = new userProfile();
-            int isUpdated = profile.UpdateUserPassword(username ,updatedPassword);
+            int isUpdated = profile.UpdateUser(userId, username ,updatedPassword, fullName);
             if(isUpdated>0)
             {
-                MessageBox.Show("Password updated successfully.");
+                MessageBox.Show("User updated successfully.");
             }
             else if (isUpdated ==0)
             {
-                MessageBox.Show("Error in updating password");
+                MessageBox.Show("Error in updating user");
             }
             else
             {

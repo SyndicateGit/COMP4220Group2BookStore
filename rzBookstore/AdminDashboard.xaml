@@ -43,7 +43,7 @@
                         <TextBox x:Name="fullNameTextBox" Width="200" Margin="5,0"/>
                         <Label Content="Balance:" VerticalAlignment="Center" Width="70"/>
                         <TextBox x:Name="balanceTextBox" Width="75" Margin="5,0"/>
-                        <Button Content="Update User" Width="100" Margin="5,0" Click="UpdateUserPass_Click"/>
+                        <Button Content="Update User" Width="100" Margin="5,0" Click="UpdateUser_Click"/>
                         <Button Content="Update Balance" Width="100" Margin="5,0" Background="Green" Click="UpdateUserBal_Click"/>
                         <Button Content="Ban User" Width="100" Margin="5,0" Background="Red" Click="BanUser_Click"/>
                     </StackPanel>
