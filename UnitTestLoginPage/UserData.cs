@@ -19,6 +19,9 @@ namespace BookStoreLIB
         public Boolean LoggedIn { set; get; }
         public string FullName { set; get; }
         public string Email {set; get;}
+        public string Balance { set; get; }
+
+
         public Boolean LogIn(string loginName, string passWord)
         {
             var dbUser = new DALUserInfo();

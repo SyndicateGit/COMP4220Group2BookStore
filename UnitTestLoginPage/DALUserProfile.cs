@@ -158,6 +158,7 @@ namespace BookStoreLIB
             return isbnList;
         }
 
+
         // Method to get the balance for a specific user
         public decimal GetUserBalance(int userID)
         {
@@ -184,6 +185,27 @@ namespace BookStoreLIB
                 {
                     conn.Close();
                 }
+
+        public int UpdateUserBalance(string username, decimal balance)
+        {
+            try
+            {
+                {
+                    string query = "UPDATE UserData SET Balance = @Balance WHERE userName = @Username";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Balance", balance);
+                        cmd.Parameters.AddWithValue("@Username", username);
+
+                        conn.Open();
+                        return cmd.ExecuteNonQuery(); // Returns the number of rows affected
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log exception
+                return -1; // Indicate an error occurred
             }
         }
 

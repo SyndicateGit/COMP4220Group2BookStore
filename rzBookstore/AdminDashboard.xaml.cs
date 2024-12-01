@@ -93,10 +93,11 @@ namespace BookStoreGUI
                 usernameTextBox.Text = selectedUser["UserName"].ToString();
                 userPassTextBox.Text = selectedUser["Password"].ToString();
                 fullNameTextBox.Text = selectedUser["FullName"].ToString();
+                balanceTextBox.Text = selectedUser["Balance"].ToString();
             }
         }
         // Update User
-        private void UpdateUser_Click(object sender, RoutedEventArgs e)
+        private void UpdateUserPass_Click(object sender, RoutedEventArgs e)
         {
 
             string updatedPassword = userPassTextBox.Text;
@@ -116,6 +117,35 @@ namespace BookStoreGUI
                 MessageBox.Show("SQL returned an error.");
             }
         }
+
+        private void UpdateUserBal_Click(object sender, RoutedEventArgs e)
+        {
+            string username = usernameTextBox.Text;
+            decimal updatedBalance;
+
+            // Validate the entered balance
+            if (!decimal.TryParse(balanceTextBox.Text, out updatedBalance))
+            {
+                MessageBox.Show("Invalid balance amount. Please enter a valid number.");
+                return;
+            }
+
+            userProfile profile = new userProfile();
+            int isUpdated = profile.UpdateUserBalance(username, updatedBalance);
+            if (isUpdated > 0)
+            {
+                MessageBox.Show("Balance updated successfully.");
+            }
+            else if (isUpdated == 0)
+            {
+                MessageBox.Show("Error in updating balance.");
+            }
+            else
+            {
+                MessageBox.Show("SQL returned an error.");
+            }
+        }
+
 
         // Ban User
         private void BanUser_Click(object sender, RoutedEventArgs e)
@@ -204,7 +234,47 @@ namespace BookStoreGUI
         // Update Book
         private void UpdateBook_Click(object sender, RoutedEventArgs e)
         {
-            // To be implemented
+            // Initialize a new book object with updated properties from the UI
+            var updatedBook = new Book
+            {
+                ISBN = updateISBNTextBox.Text,
+                Title = updateTitleTextBox.Text,
+                Author = updateAuthorTextBox.Text,
+                Price = decimal.TryParse(updatePriceTextBox.Text, out var price) ? price : 0,
+                Stock = int.TryParse(updateStockTextBox.Text, out var stock) ? stock : 0
+            };
+
+            // Validate required fields
+            if (string.IsNullOrWhiteSpace(updatedBook.ISBN) ||
+                string.IsNullOrWhiteSpace(updatedBook.Title) ||
+                updatedBook.Price <= 0 || updatedBook.Stock < 0)
+            {
+                MessageBox.Show("All fields must be filled out correctly to update the book.");
+                return;
+            }
+
+            try
+            {
+                // Attempt to update the book using the business logic in Book.cs
+                bool isUpdated = updatedBook.UpdateBookDetails();
+
+                if (isUpdated)
+                {
+                    MessageBox.Show("Book details updated successfully!");
+                }
+                else
+                {
+                    MessageBox.Show("Failed to update the book. Please try again.");
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An unexpected error occurred: " + ex.Message);
+            }
         }
     }
 }
