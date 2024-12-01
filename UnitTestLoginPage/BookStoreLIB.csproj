@@ -89,6 +89,7 @@
     <Compile Include="UnitTestBooks.cs" />
     <Compile Include="UserData.cs" />
     <Compile Include="userProfile.cs" />
+    <Compile Include="UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
