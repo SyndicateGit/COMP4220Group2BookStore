@@ -26,10 +26,10 @@ namespace BookStoreLIB
             DALUserProfile dalUserProfile = new DALUserProfile();
             return dalUserProfile.UpdateUserProfile(userID, name, phone, email, address, password, balance);
         }
-        public int UpdateUserPassword(string username, string password)
+        public int UpdateUser(int userId, string username, string password, string fullName)
         {
             DALUserProfile dALUserProfile = new DALUserProfile();
-            return dALUserProfile.UpdateUserPassword(username, password);
+            return dALUserProfile.UpdateUser(userId, username, password, fullName);
         }
 
         public int UpdateUserBalance(string username, decimal balance)

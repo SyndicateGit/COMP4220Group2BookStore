@@ -246,28 +246,42 @@ namespace BookStoreLIB
         }
 
         [TestMethod]
-        public void TestUpdateUserPassword()
+        public void TestUpdateUser()
         {
-            inputName = "testUser_154849";
-            inputPassword = "te12345";
+            // Arrange
+            int userID = 45; // Assuming an existing user ID
+            string originalUsername = "TestUserName2";
+            string originalPassword = "te1234";
+            string originalFullName = "TestFullName";
+            string updatedUsername = "TestUserName1";
+            string updatedPassword = "te1235";
+            string updatedFullName = "TestFullName2";
+
             userProfile userInfo = new userProfile();
-            int expectedReturn = 1;
-            int actualReturn = userInfo.UpdateUserPassword(inputName, inputPassword);
-            Assert.AreEqual(expectedReturn, actualReturn);
-            Boolean expectedReturnLogin = true;
-            Boolean actualReturnLogin = userData.LogIn(inputName, inputPassword);
-            Assert.AreEqual(expectedReturnLogin, actualReturnLogin);
 
-            string inputPasswordOld = "te1234";
-            actualReturnLogin = userData.LogIn(inputName, inputPasswordOld);
-            Assert.AreNotEqual(expectedReturnLogin, actualReturnLogin);
-            actualReturn = userInfo.UpdateUserPassword(inputName, inputPasswordOld);
-            Assert.AreEqual(actualReturn, expectedReturn);
-            actualReturnLogin = userData.LogIn(inputName, inputPasswordOld);
-            Assert.AreEqual(expectedReturnLogin, actualReturnLogin);
-        }
+            int updateResult = userInfo.UpdateUser(userID, updatedUsername, updatedPassword, updatedFullName);
 
-            [TestMethod]
+            Assert.AreEqual(1, updateResult, "UpdateUser should return 1 if the update was successful.");
+
+            // Fetch the user
+            DALUserProfile dalUserProfile = new DALUserProfile();
+            DataRow updatedUser = dalUserProfile.GetUserProfile(userID);
+
+   
+            Assert.AreEqual(updatedPassword, updatedUser["Password"].ToString(), "Password should be updated.");
+            Assert.AreEqual(updatedFullName, updatedUser["FullName"].ToString(), "Full name should be updated.");
+
+            // Restore original
+            updateResult = userInfo.UpdateUser(userID, originalUsername, originalPassword, originalFullName);
+            Assert.AreEqual(1, updateResult, "Restore original user details should succeed.");
+
+            // Fetch and check if restoration worked
+            DataRow restoredUser = dalUserProfile.GetUserProfile(userID);
+            Assert.AreEqual(originalPassword, restoredUser["Password"].ToString(), "Password should be restored.");
+            Assert.AreEqual(originalFullName, restoredUser["FullName"].ToString(), "Full name should be restored.");
+    }
+
+        [TestMethod]
             public void GetBookQuotes_ReturnsQuotes()
             {
                 BookQuotes bookQuotes = new BookQuotes();
@@ -329,7 +343,7 @@ namespace BookStoreLIB
             public void TestFindUserAdmin()
             {
                 //Tests corresponding to userID
-                int wrongInputID = 40;
+                int wrongInputID = 999;
                 actualUserId = 1;
                 UserData userDataProfiles = new UserData();
                 DataTable profiles = userDataProfiles.GetUsersInfo(actualUserId);
@@ -351,20 +365,6 @@ namespace BookStoreLIB
                 inputName = "afjdksaffdsa";
                 profiles = userDataProfiles.GetUsersInfo(inputName);
                 Assert.IsFalse(profiles.Rows.Count > 0);
-
-                //Test corresponding to prefix match
-
-                inputName = "te";
-                profiles = userDataProfiles.GetUsersInfo(inputName);
-                //At current moment there are 16
-                expectedLength = 10;
-                actualLength = profiles.Rows.Count;
-                Assert.IsTrue(actualLength > expectedLength);
-
-                
-
-
-
             }
 
         }

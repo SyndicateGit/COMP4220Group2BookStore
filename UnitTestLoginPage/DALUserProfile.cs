@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Net;
+using System.Security.Policy;
 
 namespace BookStoreLIB
 {
@@ -35,24 +37,28 @@ namespace BookStoreLIB
                 return null;
             }
         }
-        public int UpdateUserPassword(string username, string password)
+        public int UpdateUser(int userID, string username, string password, string fullName)
         {
             try
             {
-                string query = "UPDATE UserData SET Password = @password WHERE UserName = @username";
+                string query = "UPDATE UserData SET FullName = @FullName, Password = @Password, UserName = @UserName WHERE UserID = @UserID";
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@username", username);
-                    cmd.Parameters.AddWithValue("@password", password);
+                    cmd.Parameters.AddWithValue("@UserID", userID);
+                    cmd.Parameters.AddWithValue("@Password", password);
+                    cmd.Parameters.AddWithValue("@FullName", fullName);
+                    cmd.Parameters.AddWithValue("@UserName", username);
+
                     conn.Open();
                     int rowsAffected = cmd.ExecuteNonQuery();
                     conn.Close();
-                    return rowsAffected;
+
+                    return rowsAffected; 
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return -1;
+                return 0; 
             }
             finally
             {
@@ -62,8 +68,8 @@ namespace BookStoreLIB
                 }
             }
         }
-        // Method to update user profile information
-        public bool UpdateUserProfile(int userID, string name, string phone, string email, string address, string password, decimal balance)
+            // Method to update user profile information
+            public bool UpdateUserProfile(int userID, string name, string phone, string email, string address, string password, decimal balance)
         {
             try
             {

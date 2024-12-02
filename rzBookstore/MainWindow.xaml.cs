@@ -185,15 +185,15 @@ namespace BookStoreGUI
                     decimal totalAmount = bookOrder.OrderItemList.Sum(item => (decimal)item.SubTotal);
 
                     // Deduct balance after purchase
-                    string deductionResult = userData.DeductBalance(totalAmount);
-                    MessageBox.Show(deductionResult);
+                    //string deductionResult = userData.DeductBalance(totalAmount);
+                    //MessageBox.Show(deductionResult);
 
-                    // Place the order if deduction was successful
-                    if (!deductionResult.StartsWith("Insufficient"))
-                    {
-                        int orderId = bookOrder.PlaceOrder(currentUserId);
-                        MessageBox.Show("Your order has been placed. Your order id is " + orderId.ToString());
-                    }
+                    //// Place the order if deduction was successful
+                    //if (!deductionResult.StartsWith("Insufficient"))
+                    //{
+                    //    int orderId = bookOrder.PlaceOrder(currentUserId);
+                    //    MessageBox.Show("Your order has been placed. Your order id is " + orderId.ToString());
+                    //}
                 }
                 else
                 {
