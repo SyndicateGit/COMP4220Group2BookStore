@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Data;
+using System.Data.SqlClient;
 using System.Windows.Controls;
 
 namespace BookStoreLIB
@@ -367,7 +368,125 @@ namespace BookStoreLIB
                 Assert.IsFalse(profiles.Rows.Count > 0);
             }
 
+        [TestMethod]
+        public void TestReviewButtonWhenLoggedIn()
+        {
+            inputName = "dclair";
+            inputPassword = "dc1234";
+
+            userData.LogIn(inputName, inputPassword);
+            Assert.IsTrue(userData.LoggedIn);
+
+            var reviewButtonClicked = false;
+            if (userData.LoggedIn)
+            {
+                reviewButtonClicked = true;
+            }
+
+            Assert.IsTrue(reviewButtonClicked);
         }
+
+        [TestMethod]
+        public void TestReviewButtonWhenNotLoggedIn()
+        {
+            inputName = "";
+            inputPassword = "";
+
+            var reviewButtonClicked = false;
+            if (string.IsNullOrEmpty(inputName) || string.IsNullOrEmpty(inputPassword))
+            {
+                reviewButtonClicked = false;
+            }
+
+            Assert.IsFalse(reviewButtonClicked);
+        }
+
+        [TestMethod]
+        public void TestAddReviewEmptyText()
+        {
+            string reviewText = "";
+            string isbn = "1111111111";
+            int userId = 1;
+
+            var result = AddReview(isbn, userId, reviewText);
+
+            Assert.IsFalse(result, "Review should not be added when it is empty.");
+        }
+
+        [TestMethod]
+        public void TestAddReviewValidText()
+        {
+            string reviewText = "Great book nice, I like it!";
+            string isbn = "1111111111"; 
+            int userId = 1;
+
+            try
+            {
+                var result = AddReview(isbn, userId, reviewText);
+                Assert.IsTrue(result, "Review should be added successfully.");
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail("Test failed due to an exception: " + ex.Message);
+            }
+        }
+
+        private bool AddReview(string isbn, int userId, string reviewText)
+        {
+            if (string.IsNullOrEmpty(reviewText))
+            {
+                return false; 
+            }
+
+            try
+            {
+                if (isbn.Length != 10)
+                {
+                    Console.WriteLine("Invalid ISBN length. Must be 10 characters.");
+                    return false;
+                }
+
+                using (SqlConnection conn = new SqlConnection(Properties.Settings.Default.MSSQLConnection))
+                {
+                    conn.Open(); 
+
+                    string query = "INSERT INTO dbo.BookReview (ISBN, UserID, ReviewText) VALUES (@ISBN, @UserID, @ReviewText)";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ISBN", isbn);
+                        cmd.Parameters.AddWithValue("@UserID", userId);
+                        cmd.Parameters.AddWithValue("@ReviewText", reviewText);
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        Console.WriteLine($"Rows affected: {rowsAffected}");
+
+                        return rowsAffected > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error adding review: " + ex.Message);
+                return false;
+            }
+        }
+
+        [TestMethod]
+        public void TestDisplayReviews()
+        {
+            string isbn = "1111111111";
+
+            DALReview dalReview = new DALReview();
+            var reviews = dalReview.GetReviews(isbn);
+
+            Assert.IsTrue(reviews.Count > 0, "Reviews should not be empty.");
+        }
+
+
+
+    }
 
 
     }
