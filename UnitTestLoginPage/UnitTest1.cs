@@ -340,33 +340,61 @@ namespace BookStoreLIB
                 // Assert: Expecting an exception, so no explicit assert is necessary
             }
 
-            [TestMethod]
-            public void TestFindUserAdmin()
-            {
-                //Tests corresponding to userID
-                int wrongInputID = 999;
-                actualUserId = 1;
-                UserData userDataProfiles = new UserData();
-                DataTable profiles = userDataProfiles.GetUsersInfo(actualUserId);
-                Assert.IsNotNull(profiles);
-                profiles = userDataProfiles.GetUsersInfo(wrongInputID);
-                //No matches
-                Assert.IsFalse(profiles.Rows.Count > 0);
 
-                //Test corresponding to a complete user name
+        [TestMethod]
+        public void TestFindUserAdminValidID()
+        {
+            //Tests corresponding to userID
+            actualUserId = 14;
+            UserData userDataProfiles = new UserData();
+            DataTable profiles = userDataProfiles.GetUsersInfo(actualUserId);
+            int expectedRows = 1;
+            string expectedName = "dclair500";
+            Assert.AreEqual(expectedRows, profiles.Rows.Count, "There should be only 1 row returned");
+            Assert.AreEqual(expectedName, profiles.Rows[0]["UserName"].ToString());
 
-                inputName = "selse";
-                int expectedLength = 1;
-                profiles = userDataProfiles.GetUsersInfo(inputName);
-                int actualLength = profiles.Rows.Count;
-                Assert.AreEqual(expectedLength,actualLength);
+        }
+        [TestMethod]
+        public void TestFindUserPrefixMatch()
+        {
+            inputName = "dc";
+            UserData userDataProfiles = new UserData();
+            DataTable profiles = userDataProfiles.GetUsersInfo(inputName);
+            Assert.IsTrue(profiles.Rows.Count > 1, "Multiple rows should be returned");
+            string expectedName = "dclair";
+            Assert.AreEqual(expectedName, profiles.Rows[0]["UserName"].ToString());
+        }
+        [TestMethod]
+        public void TestFindUserAdminValidName()
+        {
+            inputName = "selse";
+            int expectedRows = 1;
+            UserData userDataProfiles = new UserData();
+            DataTable profiles = userDataProfiles.GetUsersInfo(inputName);
+            int actualLength = profiles.Rows.Count;
+            Assert.AreEqual(expectedRows, actualLength, "Only 1 row should be returned");
+            int expectedId = 6;
+            Assert.AreEqual(expectedId, profiles.Rows[0][0], "UserID should be 6");
 
-                //Test corresponding to invalid username
+        }
+        [TestMethod]
+        public void TestFindUserAdminInvalidName()
+        {
+            inputName = "afjdksaffdsa";
+            UserData userDataProfiles = new UserData();
+            DataTable profiles = userDataProfiles.GetUsersInfo(inputName);
+            Assert.IsFalse(profiles.Rows.Count > 0, "No rows should be returned");
+        }
+        [TestMethod]
+        public void TestFindUserAdminInvalidID()
+        {
+            int wrongInputID = 999;
+            UserData userDataProfiles = new UserData();
+            DataTable profiles = userDataProfiles.GetUsersInfo(wrongInputID);
+            Assert.IsFalse(profiles.Rows.Count > 0);
 
-                inputName = "afjdksaffdsa";
-                profiles = userDataProfiles.GetUsersInfo(inputName);
-                Assert.IsFalse(profiles.Rows.Count > 0);
-            }
+        }
+
 
         [TestMethod]
         public void TestReviewButtonWhenLoggedIn()
