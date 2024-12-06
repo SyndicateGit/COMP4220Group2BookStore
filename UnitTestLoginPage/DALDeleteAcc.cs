@@ -13,6 +13,7 @@ namespace BookStoreLIB
         {
             conn = new SqlConnection(Properties.Settings.Default.MSSQLConnection);
         }
+         public bool IsConnectionClosed => conn.State == ConnectionState.Closed;
 
         // Method to delete a user account based on user ID
         public bool DeleteAccount(int userID)
