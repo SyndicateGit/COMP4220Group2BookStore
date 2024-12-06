@@ -483,6 +483,79 @@ namespace BookStoreLIB
 
             Assert.IsTrue(reviews.Count > 0, "Reviews should not be empty.");
         }
+ [TestClass]
+public class DALDeleteAccTests
+{
+    private DALDeleteAcc dalDeleteAcc;
+
+    [TestInitialize]
+    public void Setup()
+    {
+       
+        dalDeleteAcc = new DALDeleteAcc();
+    }
+
+    [TestMethod]
+    public void TestDeleteAccount_ValidUserId()
+    {
+        
+        int validUserId = 4; 
+        Boolean expectedReturn = true;
+
+       
+        Boolean actualReturn = dalDeleteAcc.DeleteAccount(validUserId);
+
+        
+        Assert.AreEqual(expectedReturn, actualReturn, "The account should be deleted successfully for a valid user ID.");
+    }
+
+    [TestMethod]
+    public void TestDeleteAccount_InvalidUserId()
+    {
+        
+        int invalidUserId = -1; 
+        Boolean expectedReturn = false;
+
+       
+        Boolean actualReturn = dalDeleteAcc.DeleteAccount(invalidUserId);
+
+        
+        Assert.AreEqual(expectedReturn, actualReturn, "The account should not be deleted for an invalid user ID.");
+    }
+    [TestMethod]
+    public void Test_DeleteAccount_SQLExceptionHandling()
+    {
+        
+        int problematicUserId = 999; 
+        Boolean expectedReturn = false;
+
+        
+        try
+        {
+            Boolean actualReturn = dalDeleteAcc.DeleteAccount(problematicUserId);
+            Assert.AreEqual(expectedReturn, actualReturn, "No account should be deleted if an exception occurs.");
+        }
+        catch (SqlException ex)
+        {
+            Assert.Fail("SQL exception was not handled properly: " + ex.Message);
+        }
+    }
+
+    [TestMethod]
+    public void Test_DeleteAccount_ConnectionManagement()
+    {
+        
+        int validUserId = 4;
+
+        
+        dalDeleteAcc.DeleteAccount(validUserId);
+
+        
+        Assert.IsTrue(dalDeleteAcc.IsConnectionClosed, "The database connection should be closed after execution.");
+    }
+
+
+}
 
 
 
